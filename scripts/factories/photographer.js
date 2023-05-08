@@ -1,17 +1,61 @@
 function photographerFactory(data) {
-    const { name, portrait } = data;
+  console.log("🚀 argument passé à la fonction photographerFactory", data);
 
-    const picture = `assets/photographers/${portrait}`;
+  // création des variables récupérées dans l'object
+  const { city, country, name, portrait, price, tagline } = data;
 
-    function getUserCardDOM() {
-        const article = document.createElement( 'article' );
-        const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
-        const h2 = document.createElement( 'h2' );
-        h2.textContent = name;
-        article.appendChild(img);
-        article.appendChild(h2);
-        return (article);
-    }
-    return { name, picture, getUserCardDOM }
+  // création du chemin de l'image
+  const picture = `assets/photographers/${portrait}`;
+
+  // création de la card du photographe avec les données précédemment récupérées
+  function getUserCardDOM() {
+    // création d'un element HTML article
+    const article = document.createElement("article");
+
+    // création d'un element HTML img
+    const img = document.createElement("img");
+    // attribution du chemin vers l'image
+    img.setAttribute("src", picture);
+
+    // création d'un element HTML H2
+    const h2 = document.createElement("h2");
+    // attribution de la valeur name au H2
+    h2.textContent = name;
+
+    // création d'un element HTML p
+    const location = document.createElement("p");
+    // attribution de la valeur city & country à l'element p
+    location.textContent = city + ", " + country;
+    // attribution de la classe CSS à l'element
+    location.classList.add("location");
+
+    // création d'un 2nd element HTML p
+    const quote = document.createElement("p");
+    // attribution de la valeur tagline à l'element p
+    quote.textContent = tagline;
+    // attribution de la classe CSS à l'element
+    quote.classList.add("quote");
+
+    // création d'un 3eme element HTML p
+    const rate = document.createElement("p");
+    // attribution de la valeur price à l'element p
+    rate.textContent = price + "€/jour";
+    // attribution de la classe CSS à l'element
+    rate.classList.add("rate");
+
+    // ajout de l'element img en tant qu'enfant de l'element article
+    article.appendChild(img);
+    // ajout de l'element h2 en tant qu'enfant de l'element article
+    article.appendChild(h2);
+    // ajout de l'element p en tant qu'enfant de l'element article
+    article.appendChild(location);
+    // ajout de l'element p en tant qu'enfant de l'element article
+    article.appendChild(quote);
+    // ajout de l'element p en tant qu'enfant de l'element article
+    article.appendChild(rate);
+
+    // retourne l'element HTML article complet (avec ses enfants)
+    return article;
+  }
+  return { name, picture, getUserCardDOM };
 }
