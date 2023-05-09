@@ -12,6 +12,17 @@ function photographerFactory(data) {
     // création d'un element HTML article
     const article = document.createElement("article");
 
+    // création d'un element HTML a
+    const divLink = document.createElement("a");
+    // attribution de la classe CSS à l'element
+    divLink.href = "photographer.html";
+    divLink.classList.add("photographer-link");
+
+    // création d'un element HTML div
+    const divImg = document.createElement("div");
+    // attribution de la classe CSS à l'element
+    divImg.classList.add("img-container");
+
     // création d'un element HTML img
     const img = document.createElement("img");
     // attribution du chemin vers l'image
@@ -43,10 +54,14 @@ function photographerFactory(data) {
     // attribution de la classe CSS à l'element
     rate.classList.add("rate");
 
-    // ajout de l'element img en tant qu'enfant de l'element article
-    article.appendChild(img);
-    // ajout de l'element h2 en tant qu'enfant de l'element article
-    article.appendChild(h2);
+    // ajout de l'element divLink en tant qu'enfant de l'element article
+    article.appendChild(divLink);
+    // ajout de l'element divImg en tant qu'enfant de l'element divLink
+    divLink.appendChild(divImg);
+    // ajout de l'element img en tant qu'enfant de l'element divImg
+    divImg.appendChild(img);
+    // ajout de l'element h2 en tant qu'enfant de l'element divLink
+    divLink.appendChild(h2);
     // ajout de l'element p en tant qu'enfant de l'element article
     article.appendChild(location);
     // ajout de l'element p en tant qu'enfant de l'element article
