@@ -11,19 +11,13 @@ async function getPhotographers() {
   if (r.ok === true) {
     // retourn le json
     photographers = await r.json();
+    console.log("🚀 (données brutes) photographers:", photographers);
+    console.log("🚀 photographers.photographers:", photographers.photographers);
+    return photographers.photographers;
   } else {
     // si pas de réponse retourne une erreur
     throw new Error("Impossible de récupérer les données");
   }
-
-  // récupére uniquement les données pour la key photographers
-  console.log("🚀 données brutes du fichier json", photographers);
-  console.log(typeof photographers);
-  photographers = photographers.photographers;
-  console.log("🚀 données ciblées du fichier json", photographers);
-  console.log(typeof photographers);
-
-  return photographers;
 }
 
 //  ----------------------------------------
@@ -36,7 +30,7 @@ async function displayData(photographers) {
 
   // itération sur chaque élément du tableau photographer
   photographers.forEach((photographer) => {
-    // utilisation de la fonction photographerFactory (comment est elle liée ?)
+    // utilisation de la fonction photographerFactory (comment est elle liée sans import ?)
     const photographerModel = photographerFactory(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM);
@@ -49,7 +43,7 @@ async function displayData(photographers) {
 
 async function init() {
   // Récupère les datas des photographes
-  const { photographers } = await getPhotographers();
+  const photographers = await getPhotographers();
   displayData(photographers);
 }
 
