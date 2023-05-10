@@ -1,4 +1,4 @@
-function photographerFactory(data) {
+function indexFactory(data) {
   console.log("🚀 argument passé à la fonction photographerFactory", data);
 
   // création des variables récupérées dans l'object

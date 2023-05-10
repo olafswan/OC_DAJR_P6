@@ -31,7 +31,7 @@ async function displayData(photographers) {
   // itération sur chaque élément du tableau photographer
   photographers.forEach((photographer) => {
     // utilisation de la fonction photographerFactory (comment est elle liée sans import ?)
-    const photographerModel = photographerFactory(photographer);
+    const photographerModel = indexFactory(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM);
   });
