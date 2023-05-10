@@ -2,7 +2,7 @@ function photographerFactory(data) {
   console.log("🚀 argument passé à la fonction photographerFactory", data);
 
   // création des variables récupérées dans l'object
-  const { city, country, name, portrait, price, tagline } = data;
+  const { city, country, name, portrait, price, tagline, id } = data;
 
   // création du chemin de l'image
   const picture = `assets/photographers/${portrait}`;
@@ -15,7 +15,7 @@ function photographerFactory(data) {
     // création d'un element HTML a
     const divLink = document.createElement("a");
     // attribution de la classe CSS à l'element
-    divLink.href = "photographer.html";
+    divLink.href = `photographer.html?id=${id}`;
     divLink.classList.add("photographer-link");
 
     // création d'un element HTML div
