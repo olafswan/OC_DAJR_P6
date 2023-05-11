@@ -31,7 +31,7 @@ async function displayData(photographers) {
 
   // itération sur chaque élément du tableau photographer
   photographers.forEach((photographer) => {
-    // utilisation de la fonction indexFactory qui retourne un object contenant 3 variables : name, picture, getUserCardDOM
+    // utilisation de la fonction photographerFactory qui retourne un object contenant 3 variables : name, picture, getUserCardDOM
     const photographerModel = photographerFactory(photographer);
     console.log(
       "1️⃣ ~ file: index.js:36 ~ photographers.forEach ~ photographerModel:",

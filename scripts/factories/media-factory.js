@@ -1,13 +1,13 @@
-function photographerFactory(data) {
-  console.log("URL:", window.location.pathname);
-
-  console.log("🚀 argument passé à la fonction photographerFactory", data);
+function mediaFactory(data) {
+  console.log("🚀 argument passé à la fonction mediaFactory", data);
 
   // création des variables récupérées dans l'object
-  const { city, country, name, portrait, price, tagline, id } = data;
+  const { date, id, image, likes, photographerId, price, title } = data;
 
   // création du chemin de l'image
   const picture = `assets/photographers/${portrait}`;
+
+  // TODO continuer la fonction en demarrant ligne du dessus
 
   // création de la card du photographe avec les données précédemment récupérées
   function getPhotographerCardDOM() {
