@@ -33,7 +33,7 @@ header {
   height: 90px;
 }
 
-h1 {
+header h1 {
   color: var(--prim-color);
   margin-right: 50px;
   font-size: 36px;

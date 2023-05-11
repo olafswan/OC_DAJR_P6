@@ -11,8 +11,8 @@ async function getPhotographers() {
   if (r.ok === true) {
     // retourn le json
     photographers = await r.json();
-    console.log("🚀 (données brutes) photographers:", photographers);
-    console.log("🚀 photographers.photographers:", photographers.photographers);
+    console.log("👩‍💻 (données brutes) photographers:", photographers);
+    console.log("👩‍💻 photographers.photographers:", photographers.photographers);
     return photographers.photographers;
   } else {
     // si pas de réponse retourne une erreur
@@ -24,15 +24,26 @@ async function getPhotographers() {
 //* fonction affichage des données récupérées
 //  -----------------------------------------
 
+// argument est un tableau contenant des objets
 async function displayData(photographers) {
   // cible l'element HTML de classe photographer_section
   const photographersSection = document.querySelector(".photographer_section");
 
   // itération sur chaque élément du tableau photographer
   photographers.forEach((photographer) => {
-    // utilisation de la fonction photographerFactory (comment est elle liée sans import ?)
-    const photographerModel = indexFactory(photographer);
+    // utilisation de la fonction indexFactory qui retourne un object contenant 3 variables : name, picture, getUserCardDOM
+    const photographerModel = photographerFactory(photographer);
+    console.log(
+      "1️⃣ ~ file: index.js:36 ~ photographers.forEach ~ photographerModel:",
+      photographerModel
+    );
+    // assigne à userCardDOM l'element HTML créé grace à la fonction getUserCardDOM
     const userCardDOM = photographerModel.getUserCardDOM();
+    console.log(
+      "2️⃣ ~ file: index.js:39 ~ photographers.forEach ~ userCardDOM:",
+      userCardDOM
+    );
+    // ajoute l'element HTML à l'element HTML de classe photographer_section
     photographersSection.appendChild(userCardDOM);
   });
 }
