@@ -9,9 +9,6 @@ function photographerFactory(data) {
 
   // création de la card du photographe avec les données précédemment récupérées
   function getUserCardDOM() {
-    console.log(window.location.pathname);
-    console.log(window.location.pathname == "/index.html");
-
     // création d'un element HTML article
     const article = document.createElement("article");
 
@@ -142,10 +139,5 @@ function photographerFactory(data) {
     // retourne l'element HTML article complet (avec ses enfants)
     return article;
   }
-  console.log(
-    "🚀 ~ file: index-factory.js:76 ~ indexFactory ~ picture:",
-    picture
-  );
-  console.log("🚀 ~ file: index-factory.js:76 ~ indexFactory ~ name:", name);
   return { name, picture, getUserCardDOM };
 }
