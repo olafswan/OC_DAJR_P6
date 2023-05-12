@@ -51,11 +51,11 @@ async function getDatas() {
     // stocke la partie media
     medias = datas.media;
 
-    console.log(
-      "👩‍💻 ~ file: photographer.js:50 ~ photographers:",
-      photographers
-    );
-    console.log("👩‍💻 ~ file: photographer.js:52 ~ medias:", medias);
+    // console.log(
+    //   "👩‍💻 ~ file: photographer.js:50 ~ photographers:",
+    //   photographers
+    // );
+    // console.log("👩‍💻 ~ file: photographer.js:52 ~ medias:", medias);
 
     // retourne le json complet
     return datas;
@@ -71,7 +71,7 @@ async function getDatas() {
 
 // déclare 2 variables pour stockage des données du photographe sélectionné
 let thisPhotographer,
-  thoseMedias = [];
+  theseMedias = [];
 
 // tri les données du photographe sélectionné
 function cleaning(id) {
@@ -83,9 +83,9 @@ function cleaning(id) {
   }
   // tri pour conserver uniquement les médias du photographe
   for (const media of medias) {
-    console.log(media.photographerId);
+    // console.log(media.photographerId);
     if (media.photographerId == id) {
-      thoseMedias.push(media);
+      theseMedias.push(media);
     }
   }
 }
@@ -95,55 +95,68 @@ function cleaning(id) {
 //  -----------------------------------------
 
 // argument est un tableau contenant des objets
-async function displayData(thisPhotographer, thoseMedia) {
+async function displayData(thisPhotographer, theseMedias) {
+  //* -------------------
   //* AFFICHAGE DU HEADER
+  //* -------------------
 
   // cible l'element HTML de classe photographerHeader
   const photographHeader = document.querySelector(".photograph-header");
 
   // utilisation de la fonction indexFactory qui retourne un object contenant 3 variables : name, picture, getPhotographerCardDOM
   const photographerModel = photographerFactory(thisPhotographer);
-  console.log(
-    "1️⃣ ~ file: photographer.js:95 ~ displayData ~ photographerModel:",
-    photographerModel
-  );
+
   // assigne à userCardDOM l'element HTML créé grace à la fonction getPhotographerCardDOM
   const userCardDOM = photographerModel.getUserCardDOM();
-  console.log(
-    "2️⃣ ~ file: photographer.js:98 ~ displayData ~ userCardDOM:",
-    userCardDOM
-  );
+
   // ajoute l'element HTML à l'element HTML de classe photographer_section
   photographHeader.appendChild(userCardDOM);
 
+  //* -----------------------------
   //* AFFICHAGE DE LA SECTION MEDIA
+  //* -----------------------------
 
   // cible l'element HTML de classe photographer_section
-  const mediaSection = document.querySelector(".media_section");
+  const mediasContainer = document.querySelector(".medias-container");
 
-  // itération sur chaque élément du tableau thoseMedia
-  thoseMedia.forEach((media) => {
+  // itération sur chaque élément du tableau theseMedia
+  console.log("🚀 ~ theseMedias : ", theseMedias);
+  theseMedias.forEach((media) => {
     // utilisation de la fonction mediaFactory qui retourne un object contenant 3 variables : name, picture, getUserCardDOM
     const photographerModel = mediaFactory(media);
     console.log(
-      "1️⃣ ~ file: index.js:130 ~ thoseMedia.forEach ~ photographerModel:",
+      "1️⃣ ~ file: index.js:130 ~ theseMedia.forEach ~ photographerModel:",
       photographerModel
     );
     // assigne à userCardDOM l'element HTML créé grace à la fonction getUserCardDOM
-    const userCardDOM = photographerModel.getUserCardDOM();
+    const userCardDOM = photographerModel.getMediaCardDOM();
     console.log(
       "2️⃣ ~ file: index.js:39 ~ photographers.forEach ~ userCardDOM:",
       userCardDOM
     );
     // ajoute l'element HTML à l'element HTML de classe photographer_section
-    photographersSection.appendChild(userCardDOM);
+    mediasContainer.appendChild(userCardDOM);
   });
+}
+
+function likesCounter() {
+  let likesCount = 0;
+  const likesNodeList = document.querySelectorAll(".likes");
+  for (const likeElement of likesNodeList) {
+    likesCount += Number(likeElement.innerText.replace(/[^0-9]/g, ""));
+  }
+  const rateContainer = document.querySelector(".rate-container");
+  const likes = document.createElement("p");
+  likes.textContent = likesCount + " ❤️";
+  likes.classList.add("rate");
+  rateContainer.prepend(likes);
 }
 
 async function init() {
   await getDatas();
   cleaning(photographerId);
-  displayData(thisPhotographer);
+  displayData(thisPhotographer, theseMedias);
+  likesCounter();
 }
 
 init();
