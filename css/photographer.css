@@ -132,13 +132,16 @@ form input {
 }
 
 .photograph-header .rate-container {
-  padding: 0.5rem 0.8rem;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
+  padding: 0.5rem 2rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   background-color: var(--second-color);
   position: fixed;
   bottom: 0px;
   right: 50px;
+  display: flex;
+  gap: 1.5rem;
+  z-index: 1;
 }
 
 .rate-container p {
@@ -148,8 +151,59 @@ form input {
 }
 
 .medias_section {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 70px;
-  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 60px;
+}
+
+.sorting {
+  height: 50px;
+  font-weight: bold;
+  padding: 1rem 0;
+}
+
+.medias-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  /* border: 1px solid green; */
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.media-container {
+  /* border: 1px solid salmon; */
+  display: flex;
+  width: 29%;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+  /* margin: 1rem; */
+  /* background-color: rgba(182, 214, 241, 0.644); */
+}
+
+figure img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 5px;
+}
+
+.likes {
+  color: var(--prim-color);
+  position: absolute;
+  bottom: 6px;
+  right: 0px;
+  /* TODO aligner likes et figcaption */
+}
+
+figcaption {
+  width: 75%;
+  color: var(--prim-color);
+  height: 2rem;
+  padding: 6px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
