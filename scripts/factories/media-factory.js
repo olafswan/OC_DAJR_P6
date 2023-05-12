@@ -1,89 +1,50 @@
 function mediaFactory(data) {
-  console.log("🚀 argument passé à la fonction mediaFactory", data);
+  console.log("❓ argument passé à la fonction mediaFactory", data);
 
   // création des variables récupérées dans l'object
   const { date, id, image, likes, photographerId, price, title } = data;
 
   // création du chemin de l'image
-  const picture = `assets/photographers/${portrait}`;
+  const picture = `assets/medias/${image}`;
 
-  // TODO continuer la fonction en demarrant ligne du dessus
+  // TODO continuer la fonction en dessous
 
-  // création de la card du photographe avec les données précédemment récupérées
-  function getPhotographerCardDOM() {
-    // création d'un element HTML article
-    const article = document.createElement("article");
+  // création de la card du media avec les données précédemment récupérées
+  function getMediaCardDOM() {
+    // const mediasSection = document.createElement("div");
+    // mediasSection.classList.add("medias_section");
 
-    // création d'un element HTML article
-    const infosContainer = document.createElement("div");
-    infosContainer.classList.add("infos-container");
+    // const sortingContainer = document.createElement("div");
+    // sortingContainer.textContent = "Trier par";
+    // sortingContainer.classList.add("sorting");
 
-    // création d'un element HTML H1
-    const h1 = document.createElement("h1");
-    // attribution de la valeur name au H1
-    h1.textContent = name;
+    // const mediasContainer = document.createElement("div");
+    // mediasContainer.classList.add("medias-container");
 
-    // création d'un element HTML p
-    const location = document.createElement("p");
-    // attribution de la valeur city & country à l'element p
-    location.textContent = city + ", " + country;
-    // attribution de la classe CSS à l'element
-    location.classList.add("location");
+    // const mediaContainer = document.createElement("div");
 
-    // création d'un 2nd element HTML p
-    const quote = document.createElement("p");
-    // attribution de la valeur tagline à l'element p
-    quote.textContent = tagline;
-    // attribution de la classe CSS à l'element
-    quote.classList.add("quote");
+    const mediaContainer = document.createElement("figure");
+    mediaContainer.classList.add("media-container");
 
-    // création d'un element HTML div
-    const divImg = document.createElement("div");
-    // attribution de la classe CSS à l'element
-    divImg.classList.add("img-container");
-
-    // création d'un element HTML img
     const img = document.createElement("img");
-    // attribution du chemin vers l'image
     img.setAttribute("src", picture);
 
-    // // création d'un element HTML a
-    // const divLink = document.createElement("a");
-    // // attribution de la classe CSS à l'element
-    // divLink.href = `photographer.html?id=${id}`;
-    // divLink.classList.add("photographer-link");
+    const likes = document.createElement("div");
+    likes.classList.add("likes");
+    likes.textContent = Math.round(Math.random() * (499 - 49) + 499) + " ❤️";
 
-    // // création d'un element HTML H2
-    // const h2 = document.createElement("h2");
-    // // attribution de la valeur name au H2
-    // h2.textContent = name;
+    const figcaption = document.createElement("figcaption");
+    figcaption.textContent = title;
 
-    // // création d'un 3eme element HTML p
-    // const rate = document.createElement("p");
-    // // attribution de la valeur price à l'element p
-    // rate.textContent = price + "€/jour";
-    // // attribution de la classe CSS à l'element
-    // rate.classList.add("rate");
+    // mediasSection.appendChild(sortingContainer);
+    // mediasSection.appendChild(mediasContainer);
+    // mediasContainer.appendChild(mediaContainer);
+    // mediaContainer.appendChild(figure);
+    mediaContainer.appendChild(img);
+    mediaContainer.appendChild(likes);
+    mediaContainer.appendChild(figcaption);
 
-    // ajout de l'element infosContainer en tant qu'enfant de l'element article
-    article.appendChild(infosContainer);
-    // ajout de l'element H1 en tant qu'enfant de l'element infosContainer
-    infosContainer.appendChild(h1);
-    // ajout de l'element location en tant qu'enfant de l'element infosContainer
-    infosContainer.appendChild(location);
-    // ajout de l'element quote en tant qu'enfant de l'element infosContainer
-    infosContainer.appendChild(quote);
-    // ajout de l'element p en tant qu'enfant de l'element article
-    article.appendChild(divImg);
-    // ajout de l'element img en tant qu'enfant de l'element divImg
-    divImg.appendChild(img);
-    // ajout de l'element h2 en tant qu'enfant de l'element divLink
-    // divLink.appendChild(h2);
-    // // ajout de l'element p en tant qu'enfant de l'element article
-    // article.appendChild(rate);
-
-    // retourne l'element HTML article complet (avec ses enfants)
-    return article;
+    return mediaContainer;
   }
-  return { name, picture, getPhotographerCardDOM };
+  return { /*name, picture,*/ getMediaCardDOM };
 }
