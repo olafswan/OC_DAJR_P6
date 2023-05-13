@@ -9,12 +9,12 @@
 }
 
 .contact_button {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: white;
-  padding: 11px;
-  width: 170px;
-  height: 70px;
+  padding: 16px 10px;
+  /* width: 170px;
+  height: 70px; */
   border: none;
   background-color: #901c1c;
   border-radius: 5px;
@@ -95,15 +95,16 @@ form input {
 
 .photograph-header .contact_button {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-55%, -50%);
 }
 
 .photograph-header h1 {
   color: var(--second-color);
   margin-right: 50px;
   font-size: 4rem;
+  margin-bottom: 10px;
 }
 
 .photograph-header .location {
@@ -182,7 +183,8 @@ form input {
   /* background-color: rgba(182, 214, 241, 0.644); */
 }
 
-figure img {
+figure img,
+figure video {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;

@@ -1,11 +1,15 @@
 function mediaFactory(data) {
+  console.log("==========================");
   console.log("❓ argument passé à la fonction mediaFactory", data);
 
   // création des variables récupérées dans l'object
-  const { date, id, image, likes, photographerId, price, title } = data;
+  const { date, id, image, video, likes, photographerId, price, title } = data;
 
   // création du chemin de l'image
   const picture = `assets/medias/${image}`;
+
+  // création du chemin de l'image
+  const clip = `assets/medias/${video}`;
 
   // TODO continuer la fonction en dessous
 
@@ -26,8 +30,25 @@ function mediaFactory(data) {
     const mediaContainer = document.createElement("figure");
     mediaContainer.classList.add("media-container");
 
-    const img = document.createElement("img");
-    img.setAttribute("src", picture);
+    let media = "";
+    if (image != null) {
+      console.log("⚠️ c'est une photo ! 📸");
+      media = document.createElement("img");
+      media.setAttribute("src", picture);
+      console.log("📸 media:", media);
+    } else if (video != null) {
+      console.log("⚠️ c'est une video ! 🎥");
+      media = document.createElement("video");
+      console.log("🎥 media:", media);
+      media.setAttribute("src", clip);
+      media.setAttribute("controls", true);
+      media.setAttribute("muted", false);
+      // media.height = 240; // in px
+      // media.width = 320;
+    }
+
+    // const media = document.createElement("img");
+    // media.setAttribute("src", picture);
 
     const likes = document.createElement("div");
     likes.classList.add("likes");
@@ -40,7 +61,12 @@ function mediaFactory(data) {
     // mediasSection.appendChild(mediasContainer);
     // mediasContainer.appendChild(mediaContainer);
     // mediaContainer.appendChild(figure);
-    mediaContainer.appendChild(img);
+
+    mediaContainer.appendChild(media);
+    console.log(
+      "🚀 ~ file: media-factory.js:60 ~ getMediaCardDOM ~ media:",
+      media
+    );
     mediaContainer.appendChild(likes);
     mediaContainer.appendChild(figcaption);
 
