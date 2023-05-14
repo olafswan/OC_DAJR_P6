@@ -52,7 +52,8 @@ function mediaFactory(data) {
 
     const likes = document.createElement("div");
     likes.classList.add("likes");
-    likes.textContent = Math.round(Math.random() * (499 - 49) + 499) + " ❤️";
+    const likeNumber = Math.round(Math.random() * (499 - 49) + 49);
+    likes.innerHTML = `${likeNumber} <i class="fa-sharp fa-solid fa-heart"></i>`;
 
     const figcaption = document.createElement("figcaption");
     figcaption.textContent = title;
