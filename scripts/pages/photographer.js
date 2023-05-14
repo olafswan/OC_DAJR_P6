@@ -147,7 +147,7 @@ function likesCounter() {
   }
   const rateContainer = document.querySelector(".rate-container");
   const likes = document.createElement("p");
-  likes.textContent = likesCount + " ❤️";
+  likes.innerHTML = `${likesCount} <i class="fa-sharp fa-solid fa-heart"></i>`;
   likes.classList.add("rate");
   rateContainer.prepend(likes);
 }
@@ -157,6 +157,14 @@ async function init() {
   cleaning(photographerId);
   displayData(thisPhotographer, theseMedias);
   likesCounter();
+  buildModal(thisPhotographer.name);
+  // initModal(thisPhotographer.name)
+  // console.log(
+  //   "🚀 ~ file: photographer.js:162 ~ init ~ thisPhotographer.name:",
+  //   thisPhotographer.name
+  // );
 }
 
 init();
+
+// module.exports = { thisPhotographer };
