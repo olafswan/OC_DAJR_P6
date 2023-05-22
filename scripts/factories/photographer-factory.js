@@ -1,11 +1,9 @@
 function photographerFactory(data) {
-  console.log("❓ argument passé à la fonction photgrapherFactory", data);
-
   // création des variables récupérées dans l'object
   const { city, country, name, portrait, price, tagline, id } = data;
 
   // création du chemin de l'image
-  const picture = `assets/photographers/${portrait}`;
+  const picture = `./assets/photographers/${portrait}`;
 
   // création de la card du photographe avec les données précédemment récupérées
   function getUserCardDOM() {
@@ -13,7 +11,7 @@ function photographerFactory(data) {
     const article = document.createElement("article");
 
     if (window.location.pathname == "/index.html") {
-      //* affichage page index.html
+      //* AFFICHAGE PAGE INDEX.HTML
 
       // création d'un element HTML a
       const divLink = document.createElement("a");
@@ -72,7 +70,7 @@ function photographerFactory(data) {
       // ajout de l'element p en tant qu'enfant de l'element article
       article.appendChild(rate);
     } else {
-      //* affichage page photographer.html
+      //* AFFICHAGE PAGE PHOTOGRAPHER.HTML
 
       // création d'un element HTML article
       const infosContainer = document.createElement("div");
@@ -139,5 +137,6 @@ function photographerFactory(data) {
     // retourne l'element HTML article complet (avec ses enfants)
     return article;
   }
-  return { name, picture, getUserCardDOM };
+  // TODO pourquoi retourner name et picture ?
+  return { /*name, picture,*/ getUserCardDOM };
 }

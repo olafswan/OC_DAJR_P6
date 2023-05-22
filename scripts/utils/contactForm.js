@@ -1,297 +1,191 @@
-// const { thisPhotographer } = require("..pages/photographer.js");
-// console.log("🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 thisPhotographer:", thisPhotographer.name);
-// const photographerName = "Mimi Keel";
+//* OUVERTURE / FERMETURE DU FORMULAIRE DE CONTACT
 
-// //* ouverture de la modal
-// const contact = document.querySelector(".contact_button");
-// contact.addEventListener("click", function () {
-//   displayModal();
-// });
-
-// function displayModal() {
-//   const modal = document.querySelector(".modalbg");
-//   modal.style.display = "block";
-// }
-
-// //* fermeture de la modal
-// const closeButton = document.querySelector(".close");
-// closeButton.addEventListener("click", function () {
-//   closeModal();
-// });
-// function closeModal() {
-//   const modal = document.querySelector(".modalbg");
-//   modal.style.display = "none";
-// }
-
-//* toggle de la modal
-
+// cible le bouton contactez-moi via sa classe CSS
 const contact = document.querySelector(".contact_button");
+
+// au click sur ce bouton jouer la fonction toggleModal()
 contact.addEventListener("click", function () {
   toggleModal();
 });
 
-let closeButton;
-
-// closeButton.addEventListener("click", function () {
-//   console.log("on ferme la modal !!!!!!!!!!");
-//   toggleModal();
-// });
-
+// fonction d'ouverture / fermeture du formulaire de contact
 function toggleModal() {
   const modal = document.querySelector(".modalbg");
   modal.classList.toggle("toggleModal");
 }
 
-// TODO terminer l'affichage de la modal
-// 1. pourquoi apparait il avec une class="modal contact_button" au lieu de class="modal" ?
-// 2. pourquoi l'input first n'apparait pas ?
-// 3. où est le bouton class="contact_button" ?
+//* CREATION DU FORMULAIRE DE CONTACT
 
-//* generation du contenu de la modal
-//* essai d'injection dans body
+// fonction de creation du formulaire de contact
 function buildModal(photographerName) {
-  //cible de l'injection
-  const body = document.querySelector("body");
-
-  // lvl 1 bground - modalbg
+  // création de l'element principal de la modal
   const modalbg = document.createElement("div");
   modalbg.classList.add("modalbg", "toggleModal");
 
-  //* v1 avec contact_modal
-  // // lvl 2 content - contact_modal
-  // const contactModal = document.createElement("div");
-  // contactModal.setAttribute("id", "contact_modal");
-
-  // lvl 3 modal
+  // création du container de la modal
   const modal = document.createElement("div");
   modal.classList.add("modal");
 
+  // création du header de la modal (1er enfant du container de la modal)
   const header = document.createElement("header");
   const h2 = document.createElement("h2");
   h2.innerHTML = `Contactez moi<br/>${photographerName}`;
 
+  // création du bouton close du header
   closeButton = document.createElement("img");
   closeButton.setAttribute("src", "assets/icons/close.svg");
   closeButton.setAttribute("id", "close_modal_button");
-  // img.setAttribute("onclick", "closeModal()");
 
+  // création de l'element form (2nd enfant du container de la modal)
   const form = document.createElement("form");
-  const div = document.createElement("div");
 
+  // création du container du formulaire
+  const div = document.createElement("div");
+  div.classList.add("form_content");
+
+  // création du label prénom
   const firstLabel = document.createElement("label");
   firstLabel.setAttribute("for", "first");
   firstLabel.textContent = "Prénom";
 
+  // création du label nom
   const lastLabel = document.createElement("label");
   lastLabel.setAttribute("for", "last");
   lastLabel.textContent = "Nom";
 
+  // création du label email
   const emailLabel = document.createElement("label");
   emailLabel.setAttribute("for", "email");
   emailLabel.textContent = "Email";
 
+  // création du label message
   const messageLabel = document.createElement("label");
   messageLabel.setAttribute("for", "message");
   messageLabel.textContent = "Votre message";
 
+  // création de l'input prénom
   const firstInput = document.createElement("input");
-  // firstInput.setAttribute("class", "text-control");
   firstInput.setAttribute("type", "text");
   firstInput.setAttribute("id", "first");
   firstInput.setAttribute("name", "first");
   firstInput.setAttribute("minlength", "2");
 
+  // création de l'input nom
   const lastInput = document.createElement("input");
-  // lastInput.setAttribute("class", "text-control");
   lastInput.setAttribute("type", "text");
   lastInput.setAttribute("id", "last");
   lastInput.setAttribute("name", "last");
   lastInput.setAttribute("minlength", "2");
 
+  // création de l'input mail
   const emailInput = document.createElement("input");
-  // emailInput.setAttribute("class", "text-control");
   emailInput.setAttribute("type", "email");
   emailInput.setAttribute("id", "email");
   emailInput.setAttribute("name", "email");
 
+  // création de l'input message
   const messageInput = document.createElement("input");
-  // messageInput.setAttribute("class", "text-control");
   messageInput.setAttribute("type", "textarea");
   messageInput.setAttribute("id", "message");
   messageInput.setAttribute("name", "message");
   messageInput.setAttribute("rows", "5");
-  // messageInput.rows = "5";
 
+  // création du bouton envoyer
   const sendButton = document.createElement("button");
   sendButton.classList.add("contact_button");
   sendButton.textContent = "Envoyer";
   sendButton.setAttribute("type", "submit");
   sendButton.setAttribute("id", "send");
 
-  // lvl1
+  // ajout de l'element parent créé
+  const body = document.querySelector("body");
   const main = document.getElementById("main");
   body.insertBefore(modalbg, main);
 
-  // lvl 1
-  // body.appendChild(modalbg);
+  // ajout des enfants de l'element crée
+  modalbg.append(modal);
 
-  //* v1
-  // modalbg.appendChild(contactModal);
-  // contactModal.appendChild(modal);
+  modal.append(header);
+  header.append(closeButton);
+  header.append(h2);
+  modal.append(form);
+  form.append(sendButton);
+  form.append(div);
 
-  //* v2 sans contactModal
-  modalbg.appendChild(modal);
-  // contactModal.appendChild(modal);
+  div.append(
+    firstLabel,
+    firstInput,
+    lastLabel,
+    lastInput,
+    emailLabel,
+    emailInput,
+    messageLabel,
+    messageInput
+  );
 
-  modal.appendChild(header);
-  header.appendChild(h2);
-  header.appendChild(closeButton);
-  modal.appendChild(form);
-  form.appendChild(div);
-
-  div.appendChild(firstLabel);
-  div.appendChild(firstInput);
-  div.appendChild(lastLabel);
-  div.appendChild(lastInput);
-  div.appendChild(emailLabel);
-  div.appendChild(emailInput);
-  div.appendChild(messageLabel);
-  div.appendChild(messageInput);
-
-  //   const pairs = [  [firstLabel, firstInput],
-  //   [lastLabel, lastInput],
-  //   [emailLabel, emailInput],
-  //   [messageLabel, messageInput],
-  // ];
-
-  // for (const [label, input] of pairs) {
-  //   label.appendChild(div);
-  //   input.appendChild(div);
-  // }
-
-  form.appendChild(sendButton);
-
-  //* event du bouton close
+  // au click sur le bouton close jouer la fonction toggleModal()
   closeButton.addEventListener("click", function () {
     toggleModal();
   });
+}
 
-  //*event du bouton envoyer
-  // TODO ne fonctionne pas car sendButton est undefined ?!
-  // sendButton.addEventListener("click", function () {
-  //   console.log("envoi du message au serveur");
-  //   toggleModal();
-  // });
+//* FONCTION D'ENVOI DU FORMULAIRE
 
-  sendButton.addEventListener("submit", (e) => {
-    // empeche la modal de se fermer au click
-    e.preventDefault();
-    console.log("submit!!!!!!!!");
+function sendForm(photographerName) {
+  // séquence de fermeture
+  function closeResetForm() {
+    // fermeture
     toggleModal();
+    // suppression de la modal modifiée
+    deleteModal();
+    // re-création de la modal original
+    buildModal(photographerName);
+    // ajout du comportement de la fonction d'envoi
+    sendForm(photographerName);
+  }
 
-    // // si le formulaire n'a pas encore été validé
-    // if (submitBtn.value == "C'est parti") {
-    //   // lancer la fonction de test des inputs
-    //   testInputsValidity();
-    // } else {
-    //   // fermer la modale
-    //   closeModal();
-    //   restoreForm();
-    // }
+  // cible le bouton sumbit
+  boutonEnvoyer = document.getElementById("send");
+  // comportement au click sur ce bouton
+  boutonEnvoyer.addEventListener("click", (event) => {
+    event.preventDefault();
+    // TODO tester la validité des données
+    console.log("🖧 Envoi des données du formulaire au serveur");
+    // si bouton est Fermer : fermeture et reset du formulaire
+    if (boutonEnvoyer.innerHTML == "Fermer") {
+      // fonction de fermeture + reset de la modale
+      closeResetForm();
+    } else {
+      // sinon afficher le message de confirmation
+      confirmMessageSent(photographerName);
+    }
+  });
+  closeButton.addEventListener("click", (e) => {
+    if (boutonEnvoyer.innerHTML == "Fermer") {
+      // fonction de fermeture + reset de la modale
+      closeResetForm();
+    }
   });
 }
 
-// //* generation du contenu de la modal
-//* fonctionnelle à l'injection dans la div #contact_modal enfant de body
-// function buildModal(photographerName = "Mimi Keel") {
-//   //cible de l'injection
-//   const contactModal = document.querySelector("#contact_modal");
+//* FONCTION D'AFFICHAGE DU MESSAGE DE CONFIRMATION
 
-//   const modal = document.createElement("div");
-//   modal.classList.add("modal");
+function confirmMessageSent(photographerName) {
+  // supression du contenu de h2
+  let h2 = document.querySelector("h2");
+  h2.innerHTML = "";
 
-//   const header = document.createElement("header");
-//   const h2 = document.createElement("h2");
-//   h2.textContent = `Contactez moi ${photographerName}`;
+  // remplacement du contenu de la div du formulaire par le message de confirmation
+  let modalForm = document.querySelector(".form_content");
+  modalForm.innerHTML = `<p>Message envoyé !</p><p>${photographerName} vous répondera sous 48 heures</p>`;
 
-//   const img = document.createElement("img");
-//   img.setAttribute("src", "assets/icons/close.svg");
-//   img.setAttribute("onclick", "closeModal()");
+  // remplacement du contenu du bouton submit (envoyer -> fermer)
+  boutonEnvoyer.innerHTML = "Fermer";
+}
 
-//   const form = document.createElement("form");
-//   const div = document.createElement("div");
+//* FONCTION DE SUPPRESSION DE LA MODAL
 
-//   const firstLabel = document.createElement("label");
-//   firstLabel.setAttribute("for", "first");
-//   firstLabel.textContent = "Prénom";
-
-//   const lastLabel = document.createElement("label");
-//   lastLabel.setAttribute("for", "last");
-//   lastLabel.textContent = "Nom";
-
-//   const emailLabel = document.createElement("label");
-//   emailLabel.setAttribute("for", "email");
-//   emailLabel.textContent = "Email";
-
-//   const messageLabel = document.createElement("label");
-//   messageLabel.setAttribute("for", "message");
-//   messageLabel.textContent = "Votre message";
-
-//   const firstInput = document.createElement("input");
-//   firstInput.setAttribute("class", "text-control");
-//   firstInput.setAttribute("type", "text");
-//   firstInput.setAttribute("id", "first");
-//   firstInput.setAttribute("name", "first");
-//   firstInput.setAttribute("minlength", "2");
-
-//   const lastInput = document.createElement("input");
-//   lastInput.setAttribute("class", "text-control");
-//   lastInput.setAttribute("type", "text");
-//   lastInput.setAttribute("id", "last");
-//   lastInput.setAttribute("name", "last");
-//   lastInput.setAttribute("minlength", "2");
-
-//   const emailInput = document.createElement("input");
-//   emailInput.setAttribute("class", "text-control");
-//   emailInput.setAttribute("type", "email");
-//   emailInput.setAttribute("id", "email");
-//   emailInput.setAttribute("name", "email");
-
-//   const messageInput = document.createElement("input");
-//   messageInput.setAttribute("class", "text-control");
-//   messageInput.setAttribute("type", "text");
-//   messageInput.setAttribute("id", "message");
-//   messageInput.setAttribute("name", "message");
-
-//   const contactButton = document.createElement("button");
-//   contactButton.classList.add("contact_button");
-
-//   contactModal.appendChild(modal);
-//   modal.appendChild(header);
-//   header.appendChild(h2);
-//   header.appendChild(img);
-//   modal.appendChild(form);
-//   form.appendChild(div);
-
-//   div.appendChild(firstLabel);
-//   div.appendChild(firstInput);
-//   div.appendChild(lastLabel);
-//   div.appendChild(lastInput);
-//   div.appendChild(emailLabel);
-//   div.appendChild(emailInput);
-//   div.appendChild(messageLabel);
-//   div.appendChild(messageInput);
-
-//   //   const pairs = [  [firstLabel, firstInput],
-//   //   [lastLabel, lastInput],
-//   //   [emailLabel, emailInput],
-//   //   [messageLabel, messageInput],
-//   // ];
-
-//   // for (const [label, input] of pairs) {
-//   //   label.appendChild(div);
-//   //   input.appendChild(div);
-//   // }
-
-//   form.appendChild(contactButton);
-// }
+function deleteModal() {
+  const modal = document.querySelector(".modalbg");
+  modal.remove();
+}
