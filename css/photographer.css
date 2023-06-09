@@ -2,13 +2,20 @@
   display: none;
 } */
 
+* {
+  /* -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
 .photograph-header {
   background-color: #fafafa;
   height: 300px;
   margin: 0 60px;
 }
 
-.contact_button {
+.contact_button,
+.send_button {
   font-size: 16px;
   font-weight: bold;
   color: white;
@@ -24,22 +31,8 @@
 /* ------------------ */
 /*        MODAL       */
 /* ------------------ */
-
-.toggleModal {
-  display: none;
-}
-
-/* TODO affichage du background */
-.modalbg {
-  /* display: none; */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(255, 255, 255, 0.534);
+.open {
+  display: flex;
 }
 
 .modal {
@@ -47,17 +40,17 @@
   background-color: #db8876;
   width: 50%;
   height: 90%;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 35px;
   margin: auto;
-
+  /* 
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
 .modal header {
@@ -66,6 +59,7 @@
   /* overflow: hidden; */
   align-items: baseline;
   flex-direction: row-reverse;
+  border: 1px solid blue;
 }
 
 .modal header img {
@@ -84,6 +78,8 @@ form {
   height: 100%;
   flex-direction: column-reverse;
   align-items: flex-start;
+  border: 1px solid red;
+  /* justify-content: space-between; */
 }
 
 form label {
@@ -95,19 +91,104 @@ form div {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   align-items: self-start;
   margin-bottom: 26px;
+  justify-content: space-between;
+  border: 1px solid green;
 }
 
 form input {
   width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 4px;
+}
+
+form textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
   /* height: 48px; */
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  resize: none;
+}
+
+.send_button {
+  padding: 16px 36px;
 }
 
 /* ------------------ */
 /*  FIN  PAGE  MODAL  */
+/* ------------------ */
+
+/* ------------------ */
+/*      LIGHTBOX      */
+/* ------------------ */
+
+.lightbox {
+  background-color: #ffffff;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: space-between; */
+  padding: 5px;
+  margin: auto;
+  /* margin: auto; */
+  /* 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+}
+
+.lightbox::backdrop {
+  background-color: antiquewhite;
+}
+
+.lightbox_previous,
+.lightbox_next {
+  height: 100%;
+  width: 10%;
+  border-color: 5px solid blue;
+  background-color: aquamarine;
+  display: flex;
+  align-items: center; /*vertical */
+  justify-content: flex-end; /*horizontal */
+}
+
+.lightbox_previous img,
+.lightbox_next img {
+  filter: invert(17%) sepia(46%) saturate(3555%) hue-rotate(344deg)
+    brightness(94%) contrast(96%);
+  /* margin-left: 0; */
+}
+
+.lightbox figure {
+  height: 100%;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox figure img {
+  height: 95%;
+  /* width: 100%; */
+  /* aspect-ratio: 1/1; */
+  object-fit: cover;
+  object-position: center center;
+}
+
+.lightbox figcaption {
+  flex-basis: 30px;
+}
+
+/* ------------------ */
+/*    FIN LIGHTBOX    */
 /* ------------------ */
 
 .photograph-header {
@@ -214,8 +295,8 @@ form input {
   /* background-color: rgba(182, 214, 241, 0.644); */
 }
 
-figure img,
-figure video {
+.media-container img,
+.media-container video {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;

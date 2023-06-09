@@ -35,13 +35,15 @@
         </div>
       </div>
     </main>
-    <dialog id="favDialog">
+    <!-- Modal start below __________________________________ -->
+    <dialog class="modal">
       <header>
-        <h2>Contactez-moi</h2>
-
-        <img class="close" src="assets/icons/close.svg" />
+        <img class="close" src="./assets/icons/close.svg" />
+        <h2>Contactez-moi <span id="contact_name"></span></h2>
       </header>
       <form>
+        <button class="send_button">Envoyer</button>
+
         <div>
           <label for="first">Prénom</label>
           <input
@@ -51,10 +53,25 @@
             name="first"
             minlength="2"
           />
+          <label for="last">Nom</label>
+          <input
+            class="text-control"
+            type="text"
+            id="last"
+            name="last"
+            minlength="2"
+          />
+          <label for="email">Email</label>
+          <input class="text-control" type="text" id="email" name="email" />
+          <label for="message">Votre message</label>
+
+          <textarea id="message" name="message" rows="5" cols="33"> </textarea>
         </div>
-        <button class="contact_button">Envoyer</button>
       </form>
     </dialog>
+
+    <script src="./scripts/templates/LightboxModal.js"></script>
+    <script src="./scripts/models/LightboxModel.js"></script>
 
     <script src="./scripts/templates/MediaCard.js"></script>
     <script src="./scripts/templates/PhotographerHeader.js"></script>

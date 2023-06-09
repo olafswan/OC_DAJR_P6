@@ -1,3 +1,5 @@
+// fetch de l'API, fichier commun aux 2 pages html
+
 class Api {
   /**
    *
@@ -7,11 +9,9 @@ class Api {
     this._url = url;
   }
 
-  // TODO la class Api ne retourne que la partie photographers (ligne 15) ce qui devrait être délégué à la classe enfant PhotographersApi..
-  async getPhotographers() {
+  async getData() {
     return fetch(this._url)
       .then((res) => res.json())
-      .then((res) => res.photographers)
       .catch((err) => console.log("an error occurs", err));
   }
 }
@@ -25,8 +25,21 @@ class PhotographersApi extends Api {
     super(url);
   }
 
-  // ancien getMovies devenu getDatas
-  async getDatas() {
-    return await this.getPhotographers();
+  async getPhotographers() {
+    return await this.getData().then((res) => res.photographers);
+  }
+}
+
+class MediaApi extends Api {
+  /**
+   *
+   * @param {string} url
+   */
+  constructor(url) {
+    super(url);
+  }
+
+  async getMedia() {
+    return await this.getData().then((res) => res.media);
   }
 }

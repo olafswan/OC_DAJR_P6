@@ -1,10 +1,8 @@
-class PhotographersModel {
-  constructor(data) {
-    console.log(
-      "🚀 3) file: PhotographersModel.js:4 \n PhotographersModel \n constructor \n variable: data\n",
-      data
-    );
+// applique la class choisie par la factory
+// fichier unique à une classe particulière
 
+class PhotographerModel {
+  constructor(data) {
     this._name = data.name;
     this._id = data.id;
     this._city = data.city;

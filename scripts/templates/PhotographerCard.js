@@ -1,3 +1,6 @@
+// création du template choisie par App()
+// fichier unique à un template particulier
+
 class PhotographerCard {
   constructor(photographer) {
     this._photographer = photographer;
