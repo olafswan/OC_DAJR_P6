@@ -15,23 +15,33 @@ class MediaCard {
     if (this._medium.hasOwnProperty("_image")) {
       // création de l'element img dans le cas d'une photo
       media = document.createElement("img");
-      media.setAttribute("src", this._medium.src);
     } else if (this._medium.hasOwnProperty("_video")) {
       // création de l'element video dans le cas d'une video
       media = document.createElement("video");
-      media.setAttribute("src", this._medium.src);
-      media.setAttribute("controls", true);
-      media.setAttribute("muted", false);
+      // media.setAttribute("controls", true);
+      // media.setAttribute("muted", false);
     }
+    media.classList.add("thumbnail");
+    media.setAttribute("src", this._medium.src);
+
+    // // création de la div popur l'affichage des likes
+    // const likes = document.createElement("div");
+    // likes.classList.add("likes");
+    // likes.innerHTML = `${this._medium.likes} <i class="fa-sharp fa-solid fa-heart"></i>`;
 
     // création de la div popur l'affichage des likes
     const likes = document.createElement("div");
     likes.classList.add("likes");
-    likes.innerHTML = `${this._medium.likes} <i class="fa-sharp fa-solid fa-heart"></i>`;
+    const span = document.createElement("span");
+    span.innerHTML = `${this._medium.likes} `;
+    const i = document.createElement("i");
+    i.classList.add("fa-sharp", "fa-solid", "fa-heart");
 
     // création de l'element figcaption pour l'affichage du titre
     const figcaption = document.createElement("figcaption");
     figcaption.textContent = this._medium.title;
+
+    likes.append(span, i);
 
     // ajout des element media, likes et figcatpion à leur parent $wrapper
     $wrapper.append(media, likes, figcaption);

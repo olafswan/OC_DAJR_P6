@@ -50,6 +50,13 @@ class PhotographerHeader {
     divRate.classList.add("rate-container");
 
     // création d'un element HTML p
+    const likes = document.createElement("p");
+    // attribution de la valeur par defaut
+    likes.innerHTML = `<i class="fa-sharp fa-solid fa-heart"></i>`;
+    // attribution de la classe CSS à l'element
+    likes.classList.add("rate", "likes-sum");
+
+    // création d'un element HTML p
     const rate = document.createElement("p");
     // attribution de la valeur city & country à l'element p
     rate.textContent = this._photographer.price + "€ / jour";
@@ -70,6 +77,7 @@ class PhotographerHeader {
     divImg.appendChild(img);
 
     $wrapper.appendChild(divRate);
+    divRate.appendChild(likes);
     divRate.appendChild(rate);
 
     // retourne l'element HTML $wrapper complet (avec ses enfants)

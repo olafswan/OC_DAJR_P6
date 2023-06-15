@@ -51,6 +51,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); */
+  animation: modal-open 0.7s ease;
 }
 
 .modal header {
@@ -130,7 +131,7 @@ form textarea {
 
 .lightbox {
   background-color: #ffffff;
-  width: 90%;
+  width: 95%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -144,43 +145,101 @@ form textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); */
+  animation: modal-open 0.7s ease;
+}
+
+@keyframes modal-open {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .lightbox::backdrop {
-  background-color: antiquewhite;
+  background-color: white;
 }
 
 .lightbox_previous,
 .lightbox_next {
   height: 100%;
-  width: 10%;
-  border-color: 5px solid blue;
-  background-color: aquamarine;
+  width: 6%;
+  /* border-color: 5px solid blue; */
+  /* background-color: aquamarine; */
   display: flex;
   align-items: center; /*vertical */
-  justify-content: flex-end; /*horizontal */
+  justify-content: center; /*horizontal */
 }
 
 .lightbox_previous img,
 .lightbox_next img {
-  filter: invert(17%) sepia(46%) saturate(3555%) hue-rotate(344deg)
-    brightness(94%) contrast(96%);
+  transform: scale(70%);
+  opacity: 0.7; /* filter: invert(12%) sepia(86%) saturate(3336%) hue-rotate(351deg)
+    brightness(86%) contrast(89%); */
+  /* loss 5.3 */
   /* margin-left: 0; */
+}
+
+/* .lightbox_previous img:hover,
+.lightbox_next img:hover {
+  opacity: 1;
+} */
+
+.lightbox_previous:hover .arrow,
+.lightbox_next:hover .arrow {
+  opacity: 1;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+/* .lightbox_next:hover .close:hover .arrow {
+  opacity: 0.7 !important;
+} */
+
+.lightbox_previous img {
+  transform: rotate(180deg) scale(70%);
+}
+
+.lightbox_next {
+  position: relative;
+}
+
+.lightbox_next .close {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(50%);
+  /* filter: brightness(0) saturate(100%) invert(12%) sepia(86%) saturate(3336%)
+    hue-rotate(351deg) brightness(86%) contrast(89%); */
 }
 
 .lightbox figure {
   height: 100%;
-  background-color: gainsboro;
+  /* background-color: gainsboro; */
   display: flex;
   flex-direction: column;
 }
 
-.lightbox figure img {
-  height: 95%;
+.lightbox figure img,
+.lightbox figure video {
+  height: 94%;
+  width: 100%;
   /* width: 100%; */
   /* aspect-ratio: 1/1; */
   object-fit: cover;
   object-position: center center;
+
+  -webkit-box-shadow: 3px 0px 0px 0px rgba(0, 0, 0, 0.17);
+  box-shadow: 3px 0px 0px 0px rgba(0, 0, 0, 0.17);
+  border-radius: 4px;
 }
 
 .lightbox figcaption {
@@ -269,11 +328,85 @@ form textarea {
   margin: 0 60px;
 }
 
+.medias_section p {
+  margin-right: 1rem;
+}
+
+/* SORT  */
+
 .sorting {
   height: 50px;
   font-weight: bold;
   padding: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
 }
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  width: 200px;
+}
+
+.custom-select select {
+  /* display: none; hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,
+.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* END SORT  */
 
 .medias-container {
   display: flex;
@@ -310,6 +443,40 @@ form textarea {
   bottom: 6px;
   right: 0px;
   /* TODO aligner likes et figcaption */
+}
+
+.likes i {
+  /* color: transparent;
+  text-shadow: 0 0 3px #000; */
+
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--prim-color);
+}
+
+.likes i:hover {
+  -webkit-text-fill-color: var(--prim-color);
+  -webkit-text-stroke-width: 0px;
+}
+
+.liked {
+  -webkit-text-fill-color: var(--prim-color) !important;
+  -webkit-text-stroke-width: 0px !important;
+  animation: liked 0.5s ease;
+}
+
+@keyframes liked {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 figcaption {

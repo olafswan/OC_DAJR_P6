@@ -8,7 +8,7 @@ class MediaModel {
     this._title = data.title;
     // this._image = data.image;
     this._likes = data.likes;
-    this._price = data.price;
+    this._date = data.date;
     this._price = data.price;
   }
 
@@ -28,8 +28,8 @@ class MediaModel {
     return this._likes;
   }
 
-  get price() {
-    return this._price;
+  get date() {
+    return this._date;
   }
 
   get price() {
