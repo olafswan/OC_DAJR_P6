@@ -8,7 +8,7 @@ class MediaCard {
 
   createMediaCard() {
     const $wrapper = document.createElement("figure");
-    $wrapper.classList.add("media-container");
+    $wrapper.classList.add("medium-container");
 
     // TODO gérer les différence image / video avec :
     let media = "";

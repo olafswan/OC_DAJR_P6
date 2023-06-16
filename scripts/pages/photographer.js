@@ -8,7 +8,7 @@ class App {
     // 1 cible l'emplacement de l'injection du header sur la page photographer.html
     this.$headerWrapper = document.querySelector(".photograph-header");
     // 2 cible l'emplacement de l'injection de la galerie photo/video sur la page photographer.html
-    this.$mediasWrapper = document.querySelector(".medias-container");
+    this.$mediaWrapper = document.querySelector(".media-container");
     this.$lightboxWrapper = document.querySelector("body");
     // 3 fetch les données json du fichier photographers.json via le fichier Api.js
     this.photographersApi = new PhotographersApi(
@@ -74,7 +74,7 @@ class App {
   }
 
   galleryBuilder(MediaData) {
-    this.$mediasWrapper = document.querySelector(".medias-container");
+    this.$mediaWrapper = document.querySelector(".media-container");
 
     // // selectione puis traite les media du photographe via la factory
     // const MediaData = mediaRawData.reduce((reducedData, currentMedia) => {
@@ -93,7 +93,7 @@ class App {
       // création de la media card via le template
       const MediaTemplate = new MediaCard(medium);
       // ajout de la media card à son element parent
-      this.$mediasWrapper.appendChild(MediaTemplate.createMediaCard());
+      this.$mediaWrapper.appendChild(MediaTemplate.createMediaCard());
     });
 
     return MediaData;
@@ -155,8 +155,8 @@ class App {
           break;
       }
 
-      const mediasContainer = document.querySelector(".medias-container");
-      mediasContainer.innerHTML = "";
+      const mediaContainer = document.querySelector(".media-container");
+      mediaContainer.innerHTML = "";
       this.galleryBuilder(sortedMediaData);
 
       this.setLightbox(sortedMediaData);
