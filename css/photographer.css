@@ -33,7 +33,7 @@ main {
 }
 
 /* ------------------ */
-/*        MODAL       */
+/*        MODAL CONTACT      */
 /* ------------------ */
 .open {
   display: flex;
@@ -331,13 +331,13 @@ form textarea {
   font-size: 1rem;
 }
 
-.medias_section {
+.media_section {
   display: flex;
   flex-direction: column;
   margin: 0 60px;
 }
 
-.medias_section p {
+.media_section p {
   margin-right: 1rem;
 }
 
@@ -417,19 +417,18 @@ form textarea {
 
 /* END SORT  */
 
-.medias-container {
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  /* border: 1px solid green; */
-  justify-content: space-between;
+.media-container {
+  display: grid;
+  /* width: 100%; */
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
-.media-container {
+.medium-container {
   /* border: 1px solid salmon; */
   display: flex;
-  width: 29%;
+  /* width: 29%; */
   justify-content: space-between;
   flex-direction: column;
   position: relative;
@@ -437,8 +436,8 @@ form textarea {
   /* background-color: rgba(182, 214, 241, 0.644); */
 }
 
-.media-container img,
-.media-container video {
+.medium-container img,
+.medium-container video {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
