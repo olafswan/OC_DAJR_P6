@@ -43,6 +43,7 @@ class PhotographerHeader {
     const img = document.createElement("img");
     // attribution du chemin vers l'image
     img.setAttribute("src", this._photographer.portrait);
+    img.setAttribute("alt", this._photographer.name);
 
     // création d'un element HTML div
     const divRate = document.createElement("div");

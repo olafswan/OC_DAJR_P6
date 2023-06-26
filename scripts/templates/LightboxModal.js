@@ -37,10 +37,12 @@ class LightboxModal {
       // création de l'element img dans le cas d'une photo
       media = document.createElement("img");
       media.setAttribute("src", this._currentUrl);
+      media.setAttribute("alt", this._title);
     } else if (this._currentUrl.slice(-3) === "mp4") {
       // création de l'element video dans le cas d'une video
       media = document.createElement("video");
       media.setAttribute("src", this._currentUrl);
+      media.setAttribute("alt", this._title);
       media.setAttribute("controls", true);
       media.setAttribute("muted", false);
     }

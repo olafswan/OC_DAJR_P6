@@ -17,10 +17,10 @@
   <body>
     <header>
       <a href="index.html">
-        <img src="./assets/images/logo.png" class="logo"
+        <img src="./assets/images/logo.png" alt="logo Fisheye" class="logo"
       /></a>
     </header>
-    <main id="main">
+    <main id="main" aria-hidden="false">
       <div class="photograph-header">
         <button class="contact_button">
           <!-- <button class="contact_button" onclick="displayModal()"> -->
@@ -32,15 +32,23 @@
         <div class="sorting">
           <p>Trier par</p>
 
-          <div class="custom-select">
+          <select id="sort">
+            <!-- <option value="0">Select :</option> -->
+            <option value="1">Popularité</option>
+            <option value="2">Date</option>
+            <option value="3">Titre</option>
+          </select>
+        </div>
+
+        <!-- <div class="custom-select">
             <select id="sort">
-              <!-- <option value="0">Select :</option> -->
+             
               <option value="1">Popularité</option>
               <option value="2">Date</option>
               <option value="3">Titre</option>
             </select>
           </div>
-        </div>
+        </div> -->
 
         <div class="media-container">
           <!-- injection JS ici  -->
@@ -48,10 +56,15 @@
       </div>
     </main>
     <!-- Modal start below __________________________________ -->
-    <dialog class="modal">
+    <dialog
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-describedby="contactModal"
+    >
       <header>
         <img class="close" src="./assets/icons/close.svg" />
-        <h2>Contactez-moi <span id="contact_name"></span></h2>
+        <h2 id="contactModal">Contactez-moi <span id="contact_name"></span></h2>
       </header>
       <form>
         <button class="send_button">Envoyer</button>

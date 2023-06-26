@@ -23,6 +23,7 @@ class MediaCard {
     }
     media.classList.add("thumbnail");
     media.setAttribute("src", this._medium.src);
+    media.setAttribute("alt", this._medium.title);
 
     // // création de la div popur l'affichage des likes
     // const likes = document.createElement("div");

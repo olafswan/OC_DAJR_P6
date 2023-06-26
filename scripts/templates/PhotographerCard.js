@@ -25,6 +25,7 @@ class PhotographerCard {
     const img = document.createElement("img");
     // attribution du chemin vers l'image
     img.setAttribute("src", this._photographer.portrait);
+    img.setAttribute("alt", this._photographer.name);
 
     // création d'un element HTML H2
     const h2 = document.createElement("h2");
