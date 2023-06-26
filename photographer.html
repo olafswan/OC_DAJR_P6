@@ -63,11 +63,17 @@
       aria-describedby="contactModal"
     >
       <header>
-        <img class="close" src="./assets/icons/close.svg" />
+        <img
+          class="close"
+          src="./assets/icons/close.svg"
+          aria-label="Fermer la fenêtre"
+        />
         <h2 id="contactModal">Contactez-moi <span id="contact_name"></span></h2>
       </header>
       <form>
-        <button class="send_button">Envoyer</button>
+        <button class="send_button" aria-label="Envoyer le message">
+          Envoyer
+        </button>
 
         <div>
           <label for="first">Prénom</label>
