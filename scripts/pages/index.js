@@ -6,7 +6,9 @@ class App {
     // 1 cible l'emplacement de l'injection sur la page index.html
     this.$wrapper = document.querySelector(".photographer_section");
     // 2 fetch les données json du fichier photographers.json via le fichier Api.js
-    this.photographersApi = new PhotographersApi("./data/photographers.json");
+    this.photographersApi = new PhotographersApi(
+      "https://olafswan.github.io/OC_DAJR_P6/data/photographers.json"
+    );
   }
 
   async main() {
