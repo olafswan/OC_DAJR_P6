@@ -18,6 +18,7 @@ class PhotographerHeader {
     const h1 = document.createElement("h1");
     // attribution de la valeur name au H1
     h1.textContent = this._photographer.name;
+    h1.setAttribute("id", "photographer");
 
     // création d'un element HTML p
     const location = document.createElement("p");

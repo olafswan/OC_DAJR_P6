@@ -12,9 +12,11 @@ class App {
     this.$lightboxWrapper = document.querySelector("body");
     // 3 fetch les données json du fichier photographers.json via le fichier Api.js
     this.photographersApi = new PhotographersApi(
-      "../../data/photographers.json"
+      "https://olafswan.github.io/OC_DAJR_P6/data/photographers.json"
     );
-    this.mediaApi = new MediaApi("../../data/photographers.json");
+    this.mediaApi = new MediaApi(
+      "https://olafswan.github.io/OC_DAJR_P6/data/photographers.json"
+    );
     // 4 récupère l'id dans l'url
     this.photographerId = window.location.search.substring(4);
   }
@@ -48,6 +50,10 @@ class App {
 
     // ajout du nom du photographe dans la modale contact
     HeaderTemplate.customPhotographerContactModal();
+
+    // ajout du label du bouton contact
+    const contactButton = document.querySelector(".contact_button");
+    contactButton.setAttribute("aria-labelledby", "photographer");
 
     // selectione puis traite les media du photographe via la factory
     const MediaData = mediaRawData.reduce((reducedData, currentMedia) => {
@@ -267,6 +273,16 @@ class App {
         this.$lightboxWrapper.appendChild(lightboxElement.createLightbox());
         let lightbox = document.querySelector(".lightbox");
         lightbox.showModal();
+
+        // previent le comportement de la touche echap
+        lightbox.addEventListener("cancel", (event) => {
+          event.preventDefault();
+        });
+
+        let main = document.querySelector("main");
+        lightbox.setAttribute("aria-hidden", "false");
+        main.setAttribute("aria-hidden", "true");
+
         // toto.classList.add("open")
 
         //* partie gestion de la modale
@@ -290,6 +306,7 @@ class App {
           if (event.target.classList.contains("close")) {
             console.log("fermeture modal");
             lightbox.remove();
+            main.setAttribute("aria-hidden", "false");
           }
         });
 
@@ -303,7 +320,21 @@ class App {
           }
         });
 
-        // toto
+        document.addEventListener("keydown", (e) => {
+          const keyCode = e.keyCode ? e.keyCode : e.which;
+
+          if (
+            lightbox.getAttribute("aria-hidden") == "false" &&
+            keyCode === 27
+          ) {
+            lightbox.remove();
+            main.setAttribute("aria-hidden", "false");
+          }
+          // if (keyCode === 27) {
+          //   contactModal.close();
+          //   console.log("fonction de fermeture");
+          // }
+        });
       });
     });
   }
@@ -354,39 +385,68 @@ contactButton.addEventListener("click", () => {
   contactModal.classList.toggle("open");
   contactModal.showModal();
   console.log("contactModal", contactModal);
-  contactModal.attr("aria-hidden", "false");
-  main.attr("aria-hidden", "true");
+  contactModal.setAttribute("aria-hidden", "false");
+  main.setAttribute("aria-hidden", "true");
+  document.querySelector("#first").focus();
 });
 // fermeture
 closeButton.addEventListener("click", () => {
   console.log("fermeture modal");
   contactModal.close();
   contactModal.classList.toggle("open");
-  dialog.attr("aria-hidden", "true");
-  main.attr("aria-hidden", "false");
+  contactModal.setAttribute("aria-hidden", "true");
+  main.setAttribute("aria-hidden", "false");
 });
 // bouton Envoyer
 sendButton.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("fermeture modal (envoi des données)");
   // TODO gérer l'envoi des données de la modale
+  console.log(
+    "Message :",
+    "\n",
+    "Prénom :",
+    getValue("first"),
+    "\n",
+    "Nom :",
+    getValue("last"),
+    "\n",
+    "Email :",
+    getValue("email"),
+    "\n",
+    "Message :",
+    getValue("message")
+  );
+  const form = document.querySelector("form");
+  form.reset();
   contactModal.close();
   contactModal.classList.toggle("open");
 });
 // fermeture à la touche Echap
 document.addEventListener("keydown", (e) => {
-  console.log("keycode", e.keycode);
-  console.log("wich", e.which);
+  // console.log("keycode", e.keycode);
+  // console.log("wich", e.which);
   const keyCode = e.keyCode ? e.keyCode : e.which;
 
-  // if (modal.attr("aria-hidden") == "false" && keyCode === 27) {
+  if (contactModal.getAttribute("aria-hidden") == "false" && keyCode === 27) {
+    contactModal.close();
+    contactModal.classList.toggle("open");
+    console.log("fonction de fermeture");
+  }
+  // if (keyCode === 27) {
   //   contactModal.close();
   //   console.log("fonction de fermeture");
   // }
-  if (keyCode === 27) {
-    contactModal.close();
-    console.log("fonction de fermeture");
-  }
+});
+
+function getValue(inputId) {
+  const input = document.getElementById(inputId);
+  return input.value;
+}
+
+let dialog = document.querySelector("dialog");
+dialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
 });
 
 // const app = new App();

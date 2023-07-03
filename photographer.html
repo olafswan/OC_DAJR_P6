@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="./css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -67,11 +67,16 @@
           class="close"
           src="./assets/icons/close.svg"
           aria-label="Fermer la fenêtre"
+          tabindex="6"
         />
         <h2 id="contactModal">Contactez-moi <span id="contact_name"></span></h2>
       </header>
-      <form>
-        <button class="send_button" aria-label="Envoyer le message">
+      <form id="contactForm">
+        <button
+          class="send_button"
+          aria-label="Envoyer le message"
+          tabindex="5"
+        >
           Envoyer
         </button>
 
@@ -83,6 +88,7 @@
             id="first"
             name="first"
             minlength="2"
+            tabindex="1"
           />
           <label for="last">Nom</label>
           <input
@@ -91,12 +97,20 @@
             id="last"
             name="last"
             minlength="2"
+            tabindex="2"
           />
           <label for="email">Email</label>
-          <input class="text-control" type="text" id="email" name="email" />
+          <input
+            class="text-control"
+            type="text"
+            id="email"
+            name="email"
+            tabindex="3"
+          />
           <label for="message">Votre message</label>
 
-          <textarea id="message" name="message" rows="5" cols="33"> </textarea>
+          <textarea id="message" name="message" rows="5" cols="33" tabindex="4">
+          </textarea>
         </div>
       </form>
     </dialog>

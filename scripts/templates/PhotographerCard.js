@@ -15,6 +15,7 @@ class PhotographerCard {
     // attribution de la classe CSS à l'element
     divLink.href = `photographer.html?id=${this._photographer.id}`;
     divLink.classList.add("photographer-link");
+    divLink.setAttribute("aria-label", `Page de ${this._photographer.name}`);
 
     // création d'un element HTML div
     const divImg = document.createElement("div");
