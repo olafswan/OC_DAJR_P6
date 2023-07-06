@@ -54,6 +54,7 @@ class PhotographerCard {
     rate.textContent = this._photographer.price + "€/jour";
     // attribution de la classe CSS à l'element
     rate.classList.add("rate");
+    rate.setAttribute("aria-label", `${this._photographer.price} par jour`);
 
     // ajout de l'element divLink en tant qu'enfant de l'element $wrapper
     $wrapper.appendChild(divLink);
