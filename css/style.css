@@ -25,6 +25,10 @@ body {
   margin: 0;
 }
 
+.ada:focus {
+  border: 1px solid #901c1c;
+}
+
 header {
   display: flex;
   flex-direction: row;
@@ -115,6 +119,9 @@ a:link {
 
 .photographer_section article p {
   margin-top: 3px;
+}
+.photographer_section article a {
+  border: 1px solid transparent;
 }
 
 .location {

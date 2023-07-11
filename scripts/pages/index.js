@@ -59,37 +59,51 @@ class App {
     // type d'elements que l'ont souhaite focusable
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const target = document.querySelector("body"); // element dans lequel on souhaite instauré le focus trap
+    // element dans lequel on souhaite instauré le focus trap
+    const target = document.querySelector("body");
 
-    // 1er element focusable
-    const firstFocusableElement = target.querySelectorAll(focusableElements)[0];
     // liste des elements focusables
     const focusableContent = target.querySelectorAll(focusableElements);
+    // 1er element focusable
+    const firstFocusableElement = focusableContent[0];
     // dernier element focusable
     const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+    console.log(focusableContent);
 
     // ajoute le trap
     document.addEventListener("keydown", function (e) {
       let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+      let isArrowLeftPressed = e.key === "ArrowLeft" || e.keyCode === 37;
+      let isArrowRightPressed = e.key === "ArrowRight" || e.keyCode === 39;
 
-      console.log(e.key);
-
-      if (!isTabPressed) {
+      if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
         return;
       }
 
-      // ajoute la classe CSS ada lors de la première pression de tab
+      console.log("after", e.key, e.keyCode);
+
+      // ajoute la classe CSS ada lors de la première pression de tab ou arrows
       if (document.getElementsByClassName("ada").length === 0) {
         for (const element of focusableContent) {
           element.classList.add("ada");
         }
       }
 
-      //  si shift est pressé (pour shift + tab)
-      if (e.shiftKey) {
+      //  si shift est pressé (pour shift + tab) ou arrowleft
+      if (e.shiftKey || isArrowLeftPressed) {
         // si le focus est actuellement sur le premier element focusable
         if (document.activeElement === firstFocusableElement) {
           lastFocusableElement.focus(); // mettre le focus sur le dernier element
+          e.preventDefault();
+        } // si le focus n'est pas sur le premier element
+        else {
+          // récupérer l'index de l'element actif (focus) et faire le focus sur index - 1)
+          const indexActiveElement = Array.from(focusableContent).indexOf(
+            document.activeElement
+          );
+          console.log(indexActiveElement);
+          focusableContent[indexActiveElement - 1].focus();
           e.preventDefault();
         }
       } else {
@@ -97,6 +111,14 @@ class App {
         if (document.activeElement === lastFocusableElement) {
           // si le focus est actuellement sur le dernier element focusable
           firstFocusableElement.focus(); // mettre le focus sur le premier element
+          e.preventDefault();
+        } else {
+          // récupérer l'index de l'element actif (focus) et faire le focus sur index + 1)
+          const indexActiveElement = Array.from(focusableContent).indexOf(
+            document.activeElement
+          );
+          console.log(indexActiveElement);
+          focusableContent[indexActiveElement + 1].focus();
           e.preventDefault();
         }
       }
