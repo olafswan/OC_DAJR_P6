@@ -14,9 +14,14 @@
   margin: 0 60px;
 }
 
-*:focus {
-  border: 1px dotted red;
+.ada:focus {
+  border: 1px solid #901c1c;
 }
+
+/* à supprimer après test  */
+/* *:focus {
+  border: 3px dotted #901c1c;
+} */
 
 .contact_button,
 .send_button {
