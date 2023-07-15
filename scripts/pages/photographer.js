@@ -282,6 +282,7 @@ class App {
         let main = document.querySelector("main");
         lightbox.setAttribute("aria-hidden", "false");
         main.setAttribute("aria-hidden", "true");
+        accessibleNavigation();
 
         // toto.classList.add("open")
 
@@ -371,61 +372,6 @@ class App {
 
     // affichage du media à afficher
   }
-
-  // ----------------------------------
-  // ----------------------------------
-  // FOCUS TRAP
-  // ----------------------------------
-  // ----------------------------------
-
-  focusTrap() {
-    // type d'elements que l'ont souhaite focusable
-    const focusableElements =
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const target = document.querySelector("body"); // element dans lequel on souhaite instauré le focus trap
-
-    // 1er element focusable
-    const firstFocusableElement = target.querySelectorAll(focusableElements)[0];
-    // liste des elements focusables
-    const focusableContent = target.querySelectorAll(focusableElements);
-    console.log(focusableContent);
-
-    // dernier element focusable
-    const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-    // ajoute le trap
-    document.addEventListener("keydown", function (e) {
-      let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-
-      if (!isTabPressed) {
-        return;
-      }
-
-      // ajoute le CSS focus à la première pression sur tab
-      if (document.getElementsByClassName("ada").length === 1) {
-        for (const element of focusableContent) {
-          element.classList.add("ada");
-        }
-      }
-
-      //  si shift est pressé (pour shift + tab)
-      if (e.shiftKey) {
-        // si le focus est actuellement sur le premier element focusable
-        if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus(); // mettre le focus sur le dernier element
-          e.preventDefault();
-        }
-      } else {
-        // si seul tab est pressé
-        if (document.activeElement === lastFocusableElement) {
-          // si le focus est actuellement sur le dernier element focusable
-          firstFocusableElement.focus(); // mettre le focus sur le premier element
-          e.preventDefault();
-        }
-      }
-    });
-    firstFocusableElement.focus();
-  }
 }
 
 //* gestion de la modale contact
@@ -442,7 +388,9 @@ contactButton.addEventListener("click", () => {
   console.log("contactModal", contactModal);
   contactModal.setAttribute("aria-hidden", "false");
   main.setAttribute("aria-hidden", "true");
-  document.querySelector("#first").focus();
+  accessibleNavigation();
+  // TODO prochaine ligne à supprimer ? (doublon avec accessibleNavigation)
+  // document.querySelector("#first").focus();
 });
 // fermeture
 closeButton.addEventListener("click", () => {
@@ -504,6 +452,103 @@ dialog.addEventListener("cancel", (event) => {
   event.preventDefault();
 });
 
+// ACCESSIBILITé
+
+// if (contactModal.getAttribute("aria-hidden") == "false") {
+//   console.log("accessibility modal launched");
+//   // type d'elements que l'ont souhaite focusable
+//   const focusableElements = "input, textarea, button, img";
+//   // element dans lequel on souhaite instauré le focus trap
+//   const target = document.querySelector("#contact");
+
+function accessibleNavigation() {
+  // type d'elements que l'ont souhaite focusable
+  const focusableElements =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+  let target;
+
+  const main = document.querySelector("#main");
+  const contactModal = document.querySelector("#contact");
+  const lightBox = document.querySelector(".lightbox");
+
+  if (main.getAttribute("aria-hidden") == "false") {
+    console.log("accessibility launched on main !!!!");
+    target = main;
+  } else if (contactModal.getAttribute("aria-hidden") == "false") {
+    console.log("accessibility launched on contactModal !!!!");
+    target = contactModal;
+  } else if (lightBox.getAttribute("aria-hidden") == "false") {
+    console.log("accessibility launched on lightBox !!!!");
+    target = lightBox;
+  }
+
+  // element dans lequel on souhaite instauré le focus trap
+  // const target = document.querySelector("body");
+
+  // liste des elements focusables
+  const focusableContent = target.querySelectorAll(focusableElements);
+  // 1er element focusable
+  const firstFocusableElement = focusableContent[0];
+  // dernier element focusable
+  const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+  console.log("nodeList des elements focusable :", focusableContent);
+
+  // ajoute le trap
+  document.addEventListener("keydown", function (e) {
+    let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+    let isArrowLeftPressed = e.key === "ArrowLeft" || e.keyCode === 37;
+    let isArrowRightPressed = e.key === "ArrowRight" || e.keyCode === 39;
+
+    if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
+      return;
+    }
+
+    // console.log("after", e.key, e.keyCode);
+
+    // ajoute la classe CSS ada lors de la première pression de tab ou arrows
+    if (document.getElementsByClassName("ada").length === 0) {
+      for (const element of focusableContent) {
+        element.classList.add("ada");
+      }
+    }
+
+    //  si shift est pressé (pour shift + tab) ou arrowleft
+    if (e.shiftKey || isArrowLeftPressed) {
+      // si le focus est actuellement sur le premier element focusable
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus(); // mettre le focus sur le dernier element
+        e.preventDefault();
+      } // si le focus n'est pas sur le premier element
+      else {
+        // récupérer l'index de l'element actif (focus) et faire le focus sur index - 1)
+        const indexActiveElement = Array.from(focusableContent).indexOf(
+          document.activeElement
+        );
+        console.log(indexActiveElement);
+        focusableContent[indexActiveElement - 1].focus();
+        e.preventDefault();
+      }
+    } else {
+      // si seul tab est pressé
+      if (document.activeElement === lastFocusableElement) {
+        // si le focus est actuellement sur le dernier element focusable
+        firstFocusableElement.focus(); // mettre le focus sur le premier element
+        e.preventDefault();
+      } else {
+        // récupérer l'index de l'element actif (focus) et faire le focus sur index + 1)
+        const indexActiveElement = Array.from(focusableContent).indexOf(
+          document.activeElement
+        );
+        console.log(indexActiveElement);
+        focusableContent[indexActiveElement + 1].focus();
+        e.preventDefault();
+      }
+    }
+  });
+  firstFocusableElement.focus();
+}
 // const app = new App();
 // app.main();
 // app.likesCounter();
@@ -515,7 +560,7 @@ async function init() {
   app.setLightbox(MediaData);
   app.likeAdder();
   app.sortBy(MediaData);
-  app.focusTrap();
+  accessibleNavigation();
 
   // console.log("🚀 ~ file: photographer.js:189 ~ init ~ toto:", toto);
   // console.log("toto :", toto);

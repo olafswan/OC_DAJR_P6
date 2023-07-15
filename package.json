@@ -1,0 +1,20 @@
+{
+  "name": "oc_dajr_p6",
+  "version": "1.0.0",
+  "description": "Depuis quelques semaines, vous êtes développeur junior chez Techasite, une société de conseil spécialisée dans le développement de sites web et d'applications mobiles.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --max-warnings=0 ."
+  },
+  "rules": {
+    "eqeqeq": "warn",
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "multiline-ternary": ["warn", "always-multiline"]
+  }
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.44.0"
+  }
+}

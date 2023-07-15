@@ -55,7 +55,7 @@ class App {
   // ----------------------------------
   // ----------------------------------
 
-  focusTrap() {
+  accessibleNavigation() {
     // type d'elements que l'ont souhaite focusable
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -133,7 +133,7 @@ class App {
 async function init() {
   const app = new App();
   await app.main();
-  app.focusTrap();
+  app.accessibleNavigation();
 }
 
 init();
