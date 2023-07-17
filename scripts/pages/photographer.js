@@ -62,10 +62,10 @@ class App {
       }
       return reducedData;
     }, []);
-    console.log(
-      "🚀 ~ file: photographer.js:50 ~ App ~ MediaData ~ MediaData:",
-      MediaData
-    );
+    // console.log(
+    //   "🚀 ~ file: photographer.js:50 ~ App ~ MediaData ~ MediaData:",
+    //   MediaData
+    // );
 
     // // création de la galerie media par itération sur l'array MediaData
     // MediaData.forEach((medium) => {
@@ -106,7 +106,7 @@ class App {
   }
 
   sortBy(MediaData) {
-    console.log("🚀 3) variable MediaData non triée ~ MediaData:", MediaData);
+    // console.log("🚀 3) variable MediaData non triée ~ MediaData:", MediaData);
     const select = document.querySelector("#sort");
 
     select.addEventListener("click", (event) => {
@@ -454,68 +454,65 @@ dialog.addEventListener("cancel", (event) => {
 
 // ACCESSIBILITé
 
-// if (contactModal.getAttribute("aria-hidden") == "false") {
-//   console.log("accessibility modal launched");
-//   // type d'elements que l'ont souhaite focusable
-//   const focusableElements = "input, textarea, button, img";
-//   // element dans lequel on souhaite instauré le focus trap
-//   const target = document.querySelector("#contact");
-
 function accessibleNavigation() {
-  // type d'elements que l'ont souhaite focusable
+  // liste des "types" d'elements que l'ont souhaite focusable
   const focusableElements =
     'button, [href], input, select, textarea, .thumbnail, .close, .arrow, [tabindex]:not([tabindex="-1"])';
-
-  let target;
 
   const main = document.querySelector("#main");
   const header = document.querySelector("header");
   const contactModal = document.querySelector("#contact");
   const lightBox = document.querySelector(".lightbox");
+  let target;
 
+  // si l'utilisateur est sur "main" y chercher les elements focusables sur main
   if (main.getAttribute("aria-hidden") == "false") {
-    console.log("♿ mode accessibilité lancé sur main");
+    console.log("♿ le mode accessibilité lancé sur main");
     target = main;
+    // si l'utilisateur est sur la modale contact y chercher les elements focusables
   } else if (contactModal.getAttribute("aria-hidden") == "false") {
-    console.log("♿ mode accessibilité lancé sur contactModal");
+    console.log("♿ le mode accessibilité lancé sur contactModal");
     target = contactModal;
+    // si l'utilisateur est sur la lightbox y chercher les elements focusables
   } else if (lightBox.getAttribute("aria-hidden") == "false") {
-    console.log("♿ mode accessibilité lancé sur lightBox");
+    console.log("♿ le mode accessibilité lancé sur lightBox");
     target = lightBox;
   }
 
-  // element dans lequel on souhaite instauré le focus trap
-  // const target = document.querySelector("body");
-
-  // liste des elements focusables
+  // création de la liste des elements focusables
   let focusableContent;
   if (target === main) {
+    // dans le cas de main, le querySelector doit être fait sur header et sur main
     focusableContent = Array.from(
       header.querySelectorAll(focusableElements)
     ).concat(Array.from(target.querySelectorAll(focusableElements)));
   } else {
+    // dans les autres cas, une seul querySelector
     focusableContent = Array.from(target.querySelectorAll(focusableElements));
   }
+
   // 1er element focusable
   const firstFocusableElement = focusableContent[0];
   // dernier element focusable
   const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
-  console.log("nodeList des elements focusable :", focusableContent);
+  console.log(
+    "liste des elements focusable\n(variable nommée 'focusableContent') :\n",
+    focusableContent
+  );
 
-  // ajoute le trap
+  // écoute la pression sur les touches
   document.addEventListener("keydown", function (e) {
     let isTabPressed = e.key === "Tab" || e.keyCode === 9;
     let isArrowLeftPressed = e.key === "ArrowLeft" || e.keyCode === 37;
     let isArrowRightPressed = e.key === "ArrowRight" || e.keyCode === 39;
 
+    // si pression sur autre chose que Tab, flèche droite et flèche gauche mettre fin à la fonction
     if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
       return;
     }
 
-    // console.log("after", e.key, e.keyCode);
-
-    // ajoute la classe CSS ada lors de la première pression de tab ou arrows
+    // lors de la première pression de tab ou arrows, ajoute la classe CSS ada à tous les elements de la liste des elements focusable pour mettre en avant le focus
     if (document.getElementsByClassName("ada").length === 0) {
       for (const element of focusableContent) {
         element.classList.add("ada");
@@ -524,9 +521,8 @@ function accessibleNavigation() {
 
     //  si shift est pressé (pour shift + tab) ou arrowleft
     if (e.shiftKey || isArrowLeftPressed) {
-      // si le focus est actuellement sur le premier element focusable
       if (document.activeElement === firstFocusableElement) {
-        // cas où le focus est sur le 1er element et l'on fait un tab arrière : le focus doit aller sur le dernier element
+        // cas NUMERO 1 où le focus est sur le 1er element et l'on fait un tab arrière : le focus doit aller sur le dernier element
 
         console.log(
           "---- ---- ---- ---- ---- ---- ----\n1) avant interaction le focus était sur 1er elem\n interaction sur la touche : tab arrière \n résultat attendu : focus sur le dernier elem"
@@ -551,9 +547,8 @@ function accessibleNavigation() {
         if (lastFocusableElement != document.activeElement) {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
         }
-      } // si le focus n'est pas sur le premier element
-      else {
-        // cas où le focus n'est pas sur le 1er element et l'on fait un tab arrière : le focus doit aller sur l'element precedent
+      } else {
+        // cas NUMERO 2 où le focus n'est pas sur le 1er element et l'on fait un tab arrière : le focus doit aller sur l'element precedent
 
         console.log(
           "---- ---- ---- ---- ---- ---- ----\n2) avant interaction le focus était sur un elem (pas le 1er)\n interaction sur la touche : tab arrière \n résultat attendu : focus sur l'elem precedent"
@@ -564,7 +559,7 @@ function accessibleNavigation() {
         );
 
         console.log(
-          "index de l'element focused avant action",
+          "index de l'element focused avant action\n(variable nommée 'indexActiveElement') :\n",
           indexActiveElement,
           "/",
           Array.from(focusableContent).length
@@ -572,7 +567,7 @@ function accessibleNavigation() {
 
         const indexPreviousElement = focusableContent[indexActiveElement - 1];
         console.log(
-          "element sur lequel le focus doit être mis :",
+          "element sur lequel le focus doit être mis\n(variable nommée 'indexPreviousElement') :\n",
           indexPreviousElement
         );
         indexPreviousElement.focus();
@@ -591,9 +586,8 @@ function accessibleNavigation() {
         }
       }
     } else {
-      // si seul tab est pressé
       if (document.activeElement === lastFocusableElement) {
-        // cas où le focus est sur le dernier element et l'on fait un tab : le focus doit aller sur le premier element
+        // cas NUMERO 3 où le focus est sur le dernier element et l'on fait un tab : le focus doit aller sur le premier element
 
         console.log(
           "---- ---- ---- ---- ---- ---- ----\n3) avant interaction le focus était sur dernier elem\n interaction sur la touche : tab avant \n résultat attendu : focus sur le 1er elem"
@@ -620,29 +614,33 @@ function accessibleNavigation() {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
         }
       } else {
-        // cas où le focus n'est pas sur le dernier element et l'on fait un tab : le focus doit aller sur l'element suivant
+        // cas NUMERO  4 où le focus n'est pas sur le dernier element et l'on fait un tab : le focus doit aller sur l'element suivant
 
         console.log(
           "---- ---- ---- ---- ---- ---- ----\n4) avant interaction le focus était sur un elem (pas le dernier)\n interaction sur la touche : tab avant \n résultat attendu : focus sur l'elem suivant"
         );
 
         // récupérer l'index de l'element actif (focus) et faire le focus sur index + 1)
-        const indexActiveElement = Array.from(focusableContent).indexOf(
+        let indexActiveElement = Array.from(focusableContent).indexOf(
           document.activeElement
         );
+
         console.log(
-          "index de l'element focused avant action",
+          "index de l'element focused avant action\n(variable nommée 'indexActiveElement') :\n",
           indexActiveElement,
           "/",
           Array.from(focusableContent).length
         );
-        const indexNextElement = focusableContent[indexActiveElement + 1];
+
+        let indexNextElement = focusableContent[indexActiveElement + 1];
+
         console.log(
-          "element sur lequel le focus doit être mis :",
+          "element sur lequel le focus doit être mis\n(variable nommée 'indexNextElement') :\n",
           indexNextElement
         );
+
         indexNextElement.focus();
-        // focusableContent[indexActiveElement + 1].focus();
+
         e.preventDefault();
         console.log(
           "après interaction focus a été mis sur :",
@@ -658,9 +656,10 @@ function accessibleNavigation() {
       }
     }
   });
+  // met le focus sur le 1er element par défaut
   firstFocusableElement.focus();
   console.log(
-    "le focus est sur l'element :",
+    "le focus est actuellement sur l'element :",
     document.activeElement,
     "\nindex de l'element dans la nodeList :",
     Array.from(focusableContent).indexOf(document.activeElement),
@@ -668,9 +667,6 @@ function accessibleNavigation() {
     Array.from(focusableContent).length
   );
 }
-// const app = new App();
-// app.main();
-// app.likesCounter();
 
 async function init() {
   const app = new App();
