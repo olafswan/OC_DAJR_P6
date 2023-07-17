@@ -58,6 +58,7 @@
     <!-- Modal start below __________________________________ -->
     <dialog
       class="modal"
+      id="contact"
       aria-hidden="true"
       role="dialog"
       aria-describedby="contactModal"
@@ -67,19 +68,10 @@
           class="close"
           src="./assets/icons/close.svg"
           aria-label="Fermer la fenêtre"
-          tabindex="6"
         />
         <h2 id="contactModal">Contactez-moi <span id="contact_name"></span></h2>
       </header>
       <form id="contactForm">
-        <button
-          class="send_button"
-          aria-label="Envoyer le message"
-          tabindex="5"
-        >
-          Envoyer
-        </button>
-
         <div>
           <label for="first">Prénom</label>
           <input
@@ -88,7 +80,6 @@
             id="first"
             name="first"
             minlength="2"
-            tabindex="1"
           />
           <label for="last">Nom</label>
           <input
@@ -97,21 +88,17 @@
             id="last"
             name="last"
             minlength="2"
-            tabindex="2"
           />
           <label for="email">Email</label>
-          <input
-            class="text-control"
-            type="text"
-            id="email"
-            name="email"
-            tabindex="3"
-          />
+          <input class="text-control" type="text" id="email" name="email" />
           <label for="message">Votre message</label>
 
-          <textarea id="message" name="message" rows="5" cols="33" tabindex="4">
-          </textarea>
+          <textarea id="message" name="message" rows="5" cols="33"> </textarea>
         </div>
+
+        <button class="send_button" aria-label="Envoyer le message">
+          Envoyer
+        </button>
       </form>
     </dialog>
 
