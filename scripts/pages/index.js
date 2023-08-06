@@ -15,15 +15,15 @@ class App {
     // récupére les données sous forme d'array
     const photographerRawData = await this.photographersApi.getPhotographers();
 
-    console.log(
-      "🚀 1) file: index.js:16 \n App \n main \n variable: photographerRawData\n",
-      photographerRawData
-    );
+    // console.log(
+    //   "🚀 1) file: index.js:16 \n App \n main \n variable: photographerRawData\n",
+    //   photographerRawData
+    // );
 
-    console.log(
-      "🚀 newwww \n file: index.js:18 \n App \n main \n photographerRawData constructor name\n",
-      photographerRawData.constructor.name
-    );
+    // console.log(
+    //   "🚀 newwww \n file: index.js:18 \n App \n main \n photographerRawData constructor name\n",
+    //   photographerRawData.constructor.name
+    // );
 
     // TODO c'est ici que sera passer en argument le type "photographers" ou "media"
     //
@@ -33,10 +33,10 @@ class App {
       (data) => new PhotographersFactory(data, "photographer")
     );
 
-    console.log(
-      "🚀 4) file: index.js:28 \n App \n main \n variable: Data\n",
-      Data
-    );
+    // console.log(
+    //   "🚀 4) file: index.js:28 \n App \n main \n variable: Data\n",
+    //   Data
+    // );
 
     // TODO comprendre le mapage, ajout des propriétés du model ?
 
@@ -69,19 +69,17 @@ class App {
     // dernier element focusable
     const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
-    console.log(focusableContent);
+    // console.log(focusableContent);
 
     // ajoute le trap
     document.addEventListener("keydown", function (e) {
-      let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-      let isArrowLeftPressed = e.key === "ArrowLeft" || e.keyCode === 37;
-      let isArrowRightPressed = e.key === "ArrowRight" || e.keyCode === 39;
+      let isTabPressed = e.key === "Tab";
+      let isArrowLeftPressed = e.key === "ArrowLeft";
+      let isArrowRightPressed = e.key === "ArrowRight";
 
       if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
         return;
       }
-
-      console.log("after", e.key, e.keyCode);
 
       // ajoute la classe CSS ada lors de la première pression de tab ou arrows
       if (document.getElementsByClassName("ada").length === 0) {
@@ -102,7 +100,7 @@ class App {
           const indexActiveElement = Array.from(focusableContent).indexOf(
             document.activeElement
           );
-          console.log(indexActiveElement);
+          // console.log(indexActiveElement);
           focusableContent[indexActiveElement - 1].focus();
           e.preventDefault();
         }
@@ -117,7 +115,7 @@ class App {
           const indexActiveElement = Array.from(focusableContent).indexOf(
             document.activeElement
           );
-          console.log(indexActiveElement);
+          // console.log(indexActiveElement);
           focusableContent[indexActiveElement + 1].focus();
           e.preventDefault();
         }
