@@ -240,103 +240,113 @@ class App {
     // écoute le click sur un des media de la gallerie
     document.querySelectorAll(".thumbnail").forEach((media) => {
       media.addEventListener("click", (event) => {
-        // récupère la node list des medias
-        const mediaNodeList = document.querySelectorAll("figure");
-
-        // récupère un tableau des url des media (à mettre à jour en cas de tri)
-        let mediaNodeArray = Array.from(mediaNodeList).map(
-          (img) => img.firstChild.src
-        );
-
-        console.log("1) data = le tableau MediaData est : ", MediaData);
-        console.log("2) type = l'array des url est : ", mediaNodeArray);
-        console.log("3) url = l'url du media clické est : ", media.src);
-        // TODO envoyer au à la factory le tableau MediaData, l'array des url et l'url du media clické pour formaté l'objet
-
-        const mediaToEnlight = new PhotographersFactory(
-          MediaData,
-          mediaNodeArray,
-          media.src
-        );
-        console.log(
-          "🚀 ~ file: photographer.js:114 ~ App ~ media.addEventListener ~ mediaToEnlight:",
-          mediaToEnlight
-        );
-
-        const lightboxElement = new LightboxModal(mediaToEnlight);
-        console.log(
-          "🚀 ~ file: photographer.js:124 ~ App ~ media.addEventListener ~ LightboxElement:",
-          lightboxElement
-        );
-        // TODO terminer l'affichage de la lighbox
-
-        this.$lightboxWrapper.appendChild(lightboxElement.createLightbox());
-        let lightbox = document.querySelector(".lightbox");
-        lightbox.showModal();
-
-        // previent le comportement de la touche echap
-        lightbox.addEventListener("cancel", (event) => {
-          event.preventDefault();
-        });
-
-        let main = document.querySelector("main");
-        lightbox.setAttribute("aria-hidden", "false");
-        main.setAttribute("aria-hidden", "true");
-        accessibleNavigation();
-
-        // toto.classList.add("open")
-
-        //* partie gestion de la modale
-
-        let previousButton = document.querySelector(".lightbox_previous");
-        let nextButton = document.querySelector(".lightbox_next");
-        // let closeButton = document.querySelector(".close");
-        // écoute le click sur le bouton précédent
-
-        previousButton.addEventListener("click", (event) => {
-          console.log("previous clicked!!");
-          // TODO gérer le previous
-          this.updateLightbox(MediaData, mediaNodeArray, "previous");
-        });
-
-        nextButton.addEventListener("click", (event) => {
-          console.log("next clicked!!");
-          // TODO gérer le next
-          this.updateLightbox(MediaData, mediaNodeArray, "next");
-
-          if (event.target.classList.contains("close")) {
-            console.log("fermeture modal");
-            lightbox.remove();
-            main.setAttribute("aria-hidden", "false");
-          }
-        });
-
-        document.addEventListener("keydown", (e) => {
-          const keyCode = e.keyCode ? e.keyCode : e.which;
-
-          if (keyCode === 37 || keyCode === 38) {
-            this.updateLightbox(MediaData, mediaNodeArray, "previous");
-          } else if (keyCode === 39 || keyCode === 40) {
-            this.updateLightbox(MediaData, mediaNodeArray, "next");
-          }
-        });
-
-        document.addEventListener("keydown", (e) => {
-          const keyCode = e.keyCode ? e.keyCode : e.which;
-
-          if (
-            lightbox.getAttribute("aria-hidden") == "false" &&
-            keyCode === 27
-          ) {
-            lightbox.remove();
-            main.setAttribute("aria-hidden", "false");
-          }
-          // if (keyCode === 27) {
-          //   contactModal.close();
-          //   console.log("fonction de fermeture");
-          // }
-        });
+        this.launchLightbox(MediaData, media);
       });
+
+      media.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          this.launchLightbox(MediaData, media);
+        }
+      });
+    });
+  }
+
+  launchLightbox(MediaData, media) {
+    // récupère la node list des medias
+    const mediaNodeList = document.querySelectorAll("figure");
+
+    // récupère un tableau des url des media (à mettre à jour en cas de tri)
+    let mediaNodeArray = Array.from(mediaNodeList).map(
+      (img) => img.firstChild.src
+    );
+
+    console.log("1) data = le tableau MediaData est : ", MediaData);
+    console.log("2) type = l'array des url est : ", mediaNodeArray);
+    console.log("3) url = l'url du media clické est : ", media.src);
+    // TODO envoyer au à la factory le tableau MediaData, l'array des url et l'url du media clické pour formaté l'objet
+
+    const mediaToEnlight = new PhotographersFactory(
+      MediaData,
+      mediaNodeArray,
+      media.src
+    );
+    console.log(
+      "🚀 ~ file: photographer.js:114 ~ App ~ media.addEventListener ~ mediaToEnlight:",
+      mediaToEnlight
+    );
+
+    const lightboxElement = new LightboxModal(mediaToEnlight);
+    console.log(
+      "🚀 ~ file: photographer.js:124 ~ App ~ media.addEventListener ~ LightboxElement:",
+      lightboxElement
+    );
+    // TODO terminer l'affichage de la lighbox
+
+    this.$lightboxWrapper.appendChild(lightboxElement.createLightbox());
+    let lightbox = document.querySelector(".lightbox");
+    lightbox.showModal();
+
+    // previent le comportement de la touche echap
+    lightbox.addEventListener("cancel", (event) => {
+      event.preventDefault();
+    });
+
+    let main = document.querySelector("main");
+    lightbox.setAttribute("aria-hidden", "false");
+    main.setAttribute("aria-hidden", "true");
+    accessibleNavigation();
+
+    // toto.classList.add("open")
+
+    //* partie gestion de la modale
+
+    let previousButton = document.querySelector(".lightbox_previous");
+    let nextButton = document.querySelector(".lightbox_next");
+    // let closeButton = document.querySelector(".close");
+    // écoute le click sur le bouton précédent
+
+    previousButton.addEventListener("click", (event) => {
+      console.log("previous clicked!!");
+      // TODO gérer le previous
+      this.updateLightbox(MediaData, mediaNodeArray, "previous");
+    });
+
+    nextButton.addEventListener("click", (event) => {
+      console.log("next clicked!!");
+      // TODO gérer le next
+      this.updateLightbox(MediaData, mediaNodeArray, "next");
+
+      if (event.target.classList.contains("close")) {
+        console.log("fermeture modal");
+        lightbox.remove();
+        main.setAttribute("aria-hidden", "false");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const keyCode = e.key;
+
+      if (keyCode === "ArrowLeft") {
+        this.updateLightbox(MediaData, mediaNodeArray, "previous");
+      } else if (keyCode === "ArrowRight") {
+        this.updateLightbox(MediaData, mediaNodeArray, "next");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const keyCode = e.key;
+
+      if (
+        lightbox.getAttribute("aria-hidden") == "false" &&
+        keyCode === "Escape"
+      ) {
+        lightbox.remove();
+        main.setAttribute("aria-hidden", "false");
+      }
+      // if (keyCode === 27) {
+      //   contactModal.close();
+      //   console.log("fonction de fermeture");
+      // }
     });
   }
 
@@ -429,9 +439,12 @@ sendButton.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   // console.log("keycode", e.keycode);
   // console.log("wich", e.which);
-  const keyCode = e.keyCode ? e.keyCode : e.which;
+  const keyCode = e.key;
 
-  if (contactModal.getAttribute("aria-hidden") == "false" && keyCode === 27) {
+  if (
+    contactModal.getAttribute("aria-hidden") == "false" &&
+    keyCode === "Escape"
+  ) {
     contactModal.close();
     contactModal.classList.toggle("open");
     console.log("fonction de fermeture");
@@ -465,7 +478,7 @@ function accessibleNavigation() {
   const lightBox = document.querySelector(".lightbox");
   let target;
 
-  // si l'utilisateur est sur "main" y chercher les elements focusables sur main
+  // si l'utilisateur est sur "main" chercher les elements focusables sur main
   if (main.getAttribute("aria-hidden") == "false") {
     console.log("♿ le mode accessibilité lancé sur main");
     target = main;
@@ -476,13 +489,14 @@ function accessibleNavigation() {
     // si l'utilisateur est sur la lightbox y chercher les elements focusables
   } else if (lightBox.getAttribute("aria-hidden") == "false") {
     console.log("♿ le mode accessibilité lancé sur lightBox");
-    target = lightBox;
+    return;
+    // target = lightBox;
   }
 
   // création de la liste des elements focusables
   let focusableContent;
   if (target === main) {
-    // dans le cas de main, le querySelector doit être fait sur header et sur main
+    // cas particulier dans le cas de main, le querySelector doit être fait sur header et sur main
     focusableContent = Array.from(
       header.querySelectorAll(focusableElements)
     ).concat(Array.from(target.querySelectorAll(focusableElements)));
@@ -503,9 +517,9 @@ function accessibleNavigation() {
 
   // écoute la pression sur les touches
   document.addEventListener("keydown", function (e) {
-    let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-    let isArrowLeftPressed = e.key === "ArrowLeft" || e.keyCode === 37;
-    let isArrowRightPressed = e.key === "ArrowRight" || e.keyCode === 39;
+    let isTabPressed = e.key === "Tab";
+    let isArrowLeftPressed = e.key === "ArrowLeft";
+    let isArrowRightPressed = e.key === "ArrowRight";
 
     // si pression sur autre chose que Tab, flèche droite et flèche gauche mettre fin à la fonction
     if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
@@ -513,7 +527,7 @@ function accessibleNavigation() {
     }
 
     // lors de la première pression de tab ou arrows, ajoute la classe CSS ada à tous les elements de la liste des elements focusable pour mettre en avant le focus
-    if (document.getElementsByClassName("ada").length === 0) {
+    if (target.getElementsByClassName("ada").length === 0) {
       for (const element of focusableContent) {
         element.classList.add("ada");
       }
