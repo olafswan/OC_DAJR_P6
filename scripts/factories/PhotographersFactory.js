@@ -7,7 +7,7 @@ class PhotographersFactory {
     // les données étant des media doivent recevoir la classe PhotoModel ou VideoModel
 
     if (type === "photographer") {
-      console.log("type photographer !!!!! | type : ", type);
+      // console.log("type photographer !!!!! | type : ", type);
       return new PhotographerModel(data);
     } else if (!isNaN(type)) {
       // cas où l'argument type est l'id d'un photographe
