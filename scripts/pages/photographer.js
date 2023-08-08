@@ -109,9 +109,8 @@ class App {
     // console.log("🚀 3) variable MediaData non triée ~ MediaData:", MediaData);
     const select = document.querySelector("#sort");
 
-    select.addEventListener("click", (event) => {
+    select.addEventListener("change", (event) => {
       console.log("sort select clicked!!");
-      // TODO gérer le previous
       const index = select.selectedIndex;
       console.log("🚀 4) index séléctionné dans la select box ~ index:", index);
 
@@ -669,6 +668,22 @@ function accessibleNavigation() {
         }
       }
     }
+
+    //ouverture du select de tri
+    if (document.activeElement.id == "sort") {
+      console.log("focus sur la selectbox");
+      // TODO déclencher un click à la pressio sur enter
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          console.log("bingo!!!");
+          const toto = document.querySelector("#sort");
+          toto.click();
+        }
+      });
+    }
+    // console.log(document.activeElement);
+    // console.log(typeof document.activeElement);
+    // document.getElementById('elementID').click();
   });
   // met le focus sur le 1er element par défaut
   firstFocusableElement.focus();
