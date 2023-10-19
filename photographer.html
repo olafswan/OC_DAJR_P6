@@ -32,23 +32,22 @@
         <div class="sorting">
           <p>Trier par</p>
 
-          <select id="sort" tabindex="0">
-            <!-- <option value="0">Select :</option> -->
-            <option value="1">Popularité</option>
-            <option value="2">Date</option>
-            <option value="3">Titre</option>
-          </select>
+          <ul class="drop-down-container">
+            <li class="drop-down-header choice" tabindex="0">
+              <p>Date</p>
+              <i class="fa-solid fa-angle-down select-icon down"></i>
+              <i class="fa-solid fa-angle-up select-icon up hide"></i>
+            </li>
+            <div class="drop-down-option-wrapper hide">
+              <li class="drop-down-option-container choice" tabindex="-1">
+                <p>Popularité</p>
+              </li>
+              <li class="drop-down-option-container choice" tabindex="-1">
+                <p>Titre</p>
+              </li>
+            </div>
+          </ul>
         </div>
-
-        <!-- <div class="custom-select">
-            <select id="sort">
-             
-              <option value="1">Popularité</option>
-              <option value="2">Date</option>
-              <option value="3">Titre</option>
-            </select>
-          </div>
-        </div> -->
 
         <div class="media-container">
           <!-- injection JS ici  -->
@@ -80,6 +79,7 @@
             id="first"
             name="first"
             minlength="2"
+            aria-label="Champs du prénom"
           />
           <label for="last">Nom</label>
           <input
@@ -88,12 +88,26 @@
             id="last"
             name="last"
             minlength="2"
+            aria-label="Champs du nom"
           />
           <label for="email">Email</label>
-          <input class="text-control" type="text" id="email" name="email" />
+          <input
+            class="text-control"
+            type="text"
+            id="email"
+            name="email"
+            aria-label="Champs de l'adresse e-mail"
+          />
           <label for="message">Votre message</label>
 
-          <textarea id="message" name="message" rows="5" cols="33"> </textarea>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            cols="33"
+            aria-label="Champs du message"
+          >
+          </textarea>
         </div>
 
         <button class="send_button" aria-label="Envoyer le message">

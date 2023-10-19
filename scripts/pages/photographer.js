@@ -19,6 +19,11 @@ class App {
     );
     // 4 récupère l'id dans l'url
     this.photographerId = window.location.search.substring(4);
+
+    this.MediaData = [];
+    this.focusableContent = [];
+    this.firstFocusableElement;
+    this.lastFocusableElement;
   }
 
   async main() {
@@ -62,6 +67,8 @@ class App {
       }
       return reducedData;
     }, []);
+
+    this.MediaData = MediaData;
     // console.log(
     //   "🚀 ~ file: photographer.js:50 ~ App ~ MediaData ~ MediaData:",
     //   MediaData
@@ -74,9 +81,212 @@ class App {
     //   // ajout de la media card à son element parent
     //   this.$mediasWrapper.appendChild(MediaTemplate.createMediaCard());
     // });
+    this.sortDropDown();
+
     return this.galleryBuilder(MediaData);
 
     // return MediaData;
+  }
+
+  openDropDown() {
+    // OUVERTURE FERMETURE
+    const dropDownOptionWrapper = document.querySelector(
+      ".drop-down-option-wrapper"
+    );
+    const dropDownOptionContainer = document.querySelectorAll(
+      ".drop-down-option-container"
+    );
+    const up = document.querySelector(".up");
+    const down = document.querySelector(".down");
+
+    dropDownOptionWrapper.classList.toggle("hide");
+    up.classList.toggle("hide");
+    down.classList.toggle("hide");
+    dropDownOptionContainer.forEach((option) => {
+      console.log(typeof option.getAttribute("tabindex"));
+      if (option.getAttribute("tabindex") === "-1") {
+        console.log("tabindex des options =-1 !!!!!");
+        option.setAttribute("tabindex", 0);
+      } else if (option.getAttribute("tabindex") === "0") {
+        console.log("tabindex des options =0 !!!!!");
+        option.setAttribute("tabindex", -1);
+      }
+    });
+    this.setFocusableContent();
+  }
+
+  sortDropDown() {
+    // OUVERTURE FERMETURE
+    const header = document.querySelector(".drop-down-header");
+    const dropDownOptionWrapper = document.querySelector(
+      ".drop-down-option-wrapper"
+    );
+    const dropDownOptionContainer = document.querySelectorAll(
+      ".drop-down-option-container"
+    );
+    const up = document.querySelector(".up");
+    const down = document.querySelector(".down");
+
+    header.addEventListener("click", () => {
+      this.openDropDown();
+    });
+
+    // SELECTION
+
+    // selection des containers de labels
+    let choices = document.querySelectorAll(".choice");
+    console.log(
+      "🚀 ~ file: photographer.js:104 ~ App ~ sortDropDown ~ choice:",
+      choices
+    );
+
+    // création de la liste des labels
+    let labelList = [];
+    choices.forEach((choice) => {
+      const label = choice.querySelector("p").innerText;
+      labelList.push(label);
+    });
+    console.log(
+      "🚀 ~ file: photographer.js:110 ~ App ~ sortDropDown ~ labelList:",
+      labelList
+    );
+
+    // fonction pour deplacer l'item en 1er
+    function moveItemToFront(arr, item) {
+      // Check if the item exists in the array
+      const itemIndex = arr.indexOf(item);
+
+      if (itemIndex !== -1) {
+        // Remove the item from its current position
+        arr.splice(itemIndex, 1);
+        // Add the item to the beginning of the array
+        arr.unshift(item);
+      }
+    }
+
+    // AU CLICK -----------------
+    // itération sur les containers de labels
+    choices.forEach((choice) => {
+      // ajout d'un ecouteur de click
+      choice.addEventListener("click", () => {
+        // séléction du nom du label
+        const label = choice.querySelector("p").innerText;
+        console.log("-----------------\n");
+        console.log("label clické :", label);
+
+        // si click sur le label 2 ou 3
+        if (labelList.indexOf(label) != 0) {
+          console.log("click sur le label 2 ou 3 !!!");
+          console.log("liste avant click", labelList);
+          moveItemToFront(labelList, label);
+          console.log("liste après click", labelList);
+
+          // copie de labelList dans un nouvel array
+          let sortLabel = [...labelList];
+          // reset de la list labeList
+          labelList = [];
+
+          // itération sur chaque container de label
+          choices.forEach((choice) => {
+            // ciblage du nom du label
+            let previousLabel = choice.querySelector("p");
+            // assignation du 1er label de la list
+            previousLabel.innerText = sortLabel[0];
+            // update de labelList
+            labelList.push(sortLabel[0]);
+            // suppression du label attribué
+            sortLabel.splice(0, 1);
+
+            // ferme le menu
+            // dropDownOptionWrapper.classList.toggle("hide");
+            // up.classList.toggle("hide");
+            // down.classList.toggle("hide");
+            // // TODO ajouter tabindex="-1" aux choix 2 et 3
+            this.openDropDown();
+          });
+
+          console.log("labelList mis à jour", labelList);
+
+          // update des containers de labels
+          choices = document.querySelectorAll(".choice");
+          console.log("choices mis à jour", choices);
+          this.sortBy(this.MediaData, label);
+        } else {
+          console.log("click sur le label 1 !!!");
+        }
+      });
+
+      // AU KEYPRESS -----------------
+      choice.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          // séléction du nom du label
+          const label = choice.querySelector("p").innerText;
+          console.log("-----------------\n");
+          console.log("label clické :", label);
+
+          // si click sur le label 2 ou 3
+          if (labelList.indexOf(label) != 0) {
+            console.log("click sur le label 2 ou 3 !!!");
+            console.log("liste avant click", labelList);
+            moveItemToFront(labelList, label);
+            console.log("liste après click", labelList);
+
+            // copie de labelList dans un nouvel array
+            let sortLabel = [...labelList];
+            // reset de la list labeList
+            labelList = [];
+
+            // itération sur chaque container de label
+            choices.forEach((choice) => {
+              // ciblage du nom du label
+              let previousLabel = choice.querySelector("p");
+              // assignation du 1er label de la list
+              previousLabel.innerText = sortLabel[0];
+              // update de labelList
+              labelList.push(sortLabel[0]);
+              // suppression du label attribué
+              sortLabel.splice(0, 1);
+
+              // ferme le menu
+              // dropDownOptionWrapper.classList.toggle("hide");
+              // up.classList.toggle("hide");
+              // down.classList.toggle("hide");
+              // // TODO ajouter tabindex="-1" aux choix 2 et 3
+              this.openDropDown();
+            });
+
+            console.log("labelList mis à jour", labelList);
+
+            // update des containers de labels
+            choices = document.querySelectorAll(".choice");
+            console.log("choices mis à jour", choices);
+            this.sortBy(this.MediaData, label);
+          } else {
+            console.log("click sur le label 1 !!!");
+          }
+        }
+      });
+    });
+
+    // END SELECTION
+  }
+
+  sortAccessibility() {
+    const header = document.querySelector(".drop-down-header");
+
+    header.addEventListener("focus", (event) => {
+      console.log(
+        "\n\n\nfocus sur le menu de tri, bingo !!! ecouter le enter press\n\n\n\n\n\n"
+      );
+      header.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          this.openDropDown();
+        }
+      });
+    });
+
+    // if (document.activeElement === header) {
+    // }
   }
 
   galleryBuilder(MediaData) {
@@ -105,80 +315,74 @@ class App {
     return MediaData;
   }
 
-  sortBy(MediaData) {
-    // console.log("🚀 3) variable MediaData non triée ~ MediaData:", MediaData);
-    const select = document.querySelector("#sort");
+  sortBy(MediaData, label) {
+    console.log(
+      "🚀 ~ file: photographer.js:212 ~ App ~ sortBy ~ label:",
+      label
+    );
 
-    select.addEventListener("change", (event) => {
-      console.log("sort select clicked!!");
-      const index = select.selectedIndex;
-      console.log("🚀 4) index séléctionné dans la select box ~ index:", index);
+    let sortedMediaData;
 
-      // let unorderedMediaData = Array.from(this.main());
-      // console.log(
-      //   "🚀 ~ file: photographer.js:234 ~ App ~ select.addEventListener ~ unorderedMediaData:",
-      //   unorderedMediaData
-      // );
+    switch (label) {
+      case "Popularité": //popularité
+        console.log("Tri par popularité");
+        sortedMediaData = MediaData.sort((a, b) =>
+          a._likes < b._likes ? 1 : a._likes > b._likes ? -1 : 0
+        );
+        console.log(
+          "🚀 5) variable MediaData ~ triée sortedMediaData:",
+          sortedMediaData
+        );
 
-      let sortedMediaData;
+        break;
+      case "Date": //date
+        console.log("Tri par date");
+        sortedMediaData = MediaData.sort((a, b) =>
+          Date.parse(a._date) < Date.parse(b._date)
+            ? -1
+            : Date.parse(a._date) > Date.parse(b._date)
+            ? 1
+            : 0
+        );
+        console.log(
+          "🚀 5) variable MediaData ~ triée sortedMediaData:",
+          sortedMediaData
+        );
 
-      switch (index) {
-        case 0: //popularité
-          console.log("Tri par popularité");
-          sortedMediaData = MediaData.sort((a, b) =>
-            a._likes < b._likes ? 1 : a._likes > b._likes ? -1 : 0
-          );
-          console.log(
-            "🚀 5) variable MediaData ~ triée sortedMediaData:",
-            sortedMediaData
-          );
-          break;
-        case 1: //date
-          console.log("Tri par date");
-          sortedMediaData = MediaData.sort((a, b) =>
-            Date.parse(a._date) < Date.parse(b._date)
-              ? -1
-              : Date.parse(a._date) > Date.parse(b._date)
-              ? 1
-              : 0
-          );
-          console.log(
-            "🚀 5) variable MediaData ~ triée sortedMediaData:",
-            sortedMediaData
-          );
-          break;
+        break;
 
-        case 2: //titre
-          console.log("Tri par titre");
-          sortedMediaData = MediaData.sort((a, b) =>
-            a._title < b._title ? -1 : a._title > b._title ? 1 : 0
-          );
-          console.log(
-            "🚀 5) variable MediaData ~ triée sortedMediaData:",
-            sortedMediaData
-          );
-          break;
-      }
+      case "Titre": //titre
+        console.log("Tri par titre");
+        sortedMediaData = MediaData.sort((a, b) =>
+          a._title < b._title ? -1 : a._title > b._title ? 1 : 0
+        );
+        console.log(
+          "🚀 5) variable MediaData ~ triée sortedMediaData:",
+          sortedMediaData
+        );
 
-      const mediaContainer = document.querySelector(".media-container");
-      mediaContainer.innerHTML = "";
-      this.galleryBuilder(sortedMediaData);
+        break;
+    }
 
-      this.setLightbox(sortedMediaData);
-      this.likeAdder();
+    const mediaContainer = document.querySelector(".media-container");
+    mediaContainer.innerHTML = "";
+    this.galleryBuilder(sortedMediaData);
 
-      // // V2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    this.setLightbox(sortedMediaData);
+    this.likeAdder();
+    this.setFocusableContent();
 
-      // this.$mediasWrapper = document.querySelector(".medias-container");
+    // // V2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-      // // création de la galerie media par itération sur l'array MediaData
-      // sortedMediaData.forEach((medium) => {
-      //   // création de la media card via le template
-      //   const MediaTemplate = new MediaCard(medium);
-      //   // ajout de la media card à son element parent
-      //   this.$mediasWrapper.appendChild(MediaTemplate.createMediaCard());
-      // });
-    });
+    // this.$mediasWrapper = document.querySelector(".medias-container");
+
+    // // création de la galerie media par itération sur l'array MediaData
+    // sortedMediaData.forEach((medium) => {
+    //   // création de la media card via le template
+    //   const MediaTemplate = new MediaCard(medium);
+    //   // ajout de la media card à son element parent
+    //   this.$mediasWrapper.appendChild(MediaTemplate.createMediaCard());
+    // });
   }
 
   likesCounter() {
@@ -293,7 +497,7 @@ class App {
     let main = document.querySelector("main");
     lightbox.setAttribute("aria-hidden", "false");
     main.setAttribute("aria-hidden", "true");
-    accessibleNavigation();
+    this.accessibleNavigation();
 
     // toto.classList.add("open")
 
@@ -381,144 +585,107 @@ class App {
 
     // affichage du media à afficher
   }
-}
 
-//* gestion de la modale contact
-let contactButton = document.querySelector(".contact_button");
-let contactModal = document.querySelector(".modal");
-let closeButton = document.querySelector(".close");
-let sendButton = document.querySelector(".send_button");
-let main = document.querySelector("main");
-// ouverture
-contactButton.addEventListener("click", () => {
-  console.log("ouverture modal");
-  contactModal.classList.toggle("open");
-  contactModal.showModal();
-  console.log("contactModal", contactModal);
-  contactModal.setAttribute("aria-hidden", "false");
-  main.setAttribute("aria-hidden", "true");
-  accessibleNavigation();
-  // TODO prochaine ligne à supprimer ? (doublon avec accessibleNavigation)
-  // document.querySelector("#first").focus();
-});
-// fermeture
-closeButton.addEventListener("click", () => {
-  console.log("fermeture modal");
-  contactModal.close();
-  contactModal.classList.toggle("open");
-  contactModal.setAttribute("aria-hidden", "true");
-  main.setAttribute("aria-hidden", "false");
-});
-// bouton Envoyer
-sendButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  console.log("fermeture modal (envoi des données)");
-  // TODO gérer l'envoi des données de la modale
-  console.log(
-    "Message :",
-    "\n",
-    "Prénom :",
-    getValue("first"),
-    "\n",
-    "Nom :",
-    getValue("last"),
-    "\n",
-    "Email :",
-    getValue("email"),
-    "\n",
-    "Message :",
-    getValue("message")
-  );
-  const form = document.querySelector("form");
-  form.reset();
-  contactModal.close();
-  contactModal.classList.toggle("open");
-});
-// fermeture à la touche Echap
-document.addEventListener("keydown", (e) => {
-  // console.log("keycode", e.keycode);
-  // console.log("wich", e.which);
-  const keyCode = e.key;
+  // ACCESSIBILITé
 
-  if (
-    contactModal.getAttribute("aria-hidden") == "false" &&
-    keyCode === "Escape"
-  ) {
-    contactModal.close();
-    contactModal.classList.toggle("open");
-    console.log("fonction de fermeture");
-  }
-  // if (keyCode === 27) {
-  //   contactModal.close();
-  //   console.log("fonction de fermeture");
-  // }
-});
+  setFocusableContent() {
+    console.log("\n\nUPDATE of focusable elements!!!!!\n\n");
+    // liste des "types" d'elements que l'ont souhaite focusable
+    const focusableElements =
+      'button, [href], input, select, textarea, .thumbnail, .close, .arrow, [tabindex]:not([tabindex="-1"])';
 
-function getValue(inputId) {
-  const input = document.getElementById(inputId);
-  return input.value;
-}
+    const main = document.querySelector("#main");
+    const header = document.querySelector("header");
+    const contactModal = document.querySelector("#contact");
+    const lightBox = document.querySelector(".lightbox");
+    let target;
 
-let dialog = document.querySelector("dialog");
-dialog.addEventListener("cancel", (event) => {
-  event.preventDefault();
-});
+    // si l'utilisateur est sur "main" chercher les elements focusables sur main
+    if (main.getAttribute("aria-hidden") == "false") {
+      console.log("♿ le mode accessibilité lancé sur main");
+      target = main;
+      // si l'utilisateur est sur la modale contact y chercher les elements focusables
+    } else if (contactModal.getAttribute("aria-hidden") == "false") {
+      console.log("♿ le mode accessibilité lancé sur contactModal");
+      target = contactModal;
+      // si l'utilisateur est sur la lightbox y chercher les elements focusables
+    } else if (lightBox.getAttribute("aria-hidden") == "false") {
+      console.log("♿ le mode accessibilité lancé sur lightBox");
+      return;
+      // target = lightBox;
+    }
 
-// ACCESSIBILITé
+    // création de la liste des elements focusables
+    // let focusableContent;
+    if (target === main) {
+      // cas particulier dans le cas de main, le querySelector doit être fait sur header et sur main
+      this.focusableContent = Array.from(
+        header.querySelectorAll(focusableElements)
+      ).concat(Array.from(target.querySelectorAll(focusableElements)));
+    } else {
+      // dans les autres cas, une seul querySelector
+      this.focusableContent = Array.from(
+        target.querySelectorAll(focusableElements)
+      );
+    }
 
-function accessibleNavigation() {
-  // liste des "types" d'elements que l'ont souhaite focusable
-  const focusableElements =
-    'button, [href], input, select, textarea, .thumbnail, .close, .arrow, [tabindex]:not([tabindex="-1"])';
+    // 1er element focusable
+    this.firstFocusableElement = this.focusableContent[0];
+    // dernier element focusable
+    this.lastFocusableElement =
+      this.focusableContent[this.focusableContent.length - 1];
 
-  const main = document.querySelector("#main");
-  const header = document.querySelector("header");
-  const contactModal = document.querySelector("#contact");
-  const lightBox = document.querySelector(".lightbox");
-  let target;
-
-  // si l'utilisateur est sur "main" chercher les elements focusables sur main
-  if (main.getAttribute("aria-hidden") == "false") {
-    console.log("♿ le mode accessibilité lancé sur main");
-    target = main;
-    // si l'utilisateur est sur la modale contact y chercher les elements focusables
-  } else if (contactModal.getAttribute("aria-hidden") == "false") {
-    console.log("♿ le mode accessibilité lancé sur contactModal");
-    target = contactModal;
-    // si l'utilisateur est sur la lightbox y chercher les elements focusables
-  } else if (lightBox.getAttribute("aria-hidden") == "false") {
-    console.log("♿ le mode accessibilité lancé sur lightBox");
-    return;
-    // target = lightBox;
+    console.log(
+      "liste des elements focusable\n(variable nommée 'focusableContent') :\n",
+      this.focusableContent
+    );
+    console.log(
+      "🚀 ~ file: photographer.js:609 ~ App ~ accessibleNavigation ~ this.firstFocusableElement:",
+      this.firstFocusableElement
+    );
+    console.log(
+      "🚀 ~ file: photographer.js:611 ~ App ~ accessibleNavigation ~ this.lastFocusableElement:",
+      this.lastFocusableElement
+    );
+    return target;
   }
 
-  // création de la liste des elements focusables
-  let focusableContent;
-  if (target === main) {
-    // cas particulier dans le cas de main, le querySelector doit être fait sur header et sur main
-    focusableContent = Array.from(
-      header.querySelectorAll(focusableElements)
-    ).concat(Array.from(target.querySelectorAll(focusableElements)));
-  } else {
-    // dans les autres cas, une seul querySelector
-    focusableContent = Array.from(target.querySelectorAll(focusableElements));
+  accessibleNavigation() {
+    let target = this.setFocusableContent();
+    console.log(
+      "🚀 ~ file: photographer.js:655 ~ App ~ accessibleNavigation ~ target:",
+      target
+    );
+
+    // écoute la pression sur les touches
+    document.addEventListener("keydown", (e) => {
+      this.accessNavigation(e, target);
+    });
+    // met le focus sur le 1er element par défaut
+    this.firstFocusableElement.focus();
+    console.log(
+      "le focus est actuellement sur l'element :",
+      document.activeElement,
+      "\nindex de l'element dans la nodeList :",
+      Array.from(this.focusableContent).indexOf(document.activeElement),
+      "/",
+      Array.from(this.focusableContent).length
+    );
   }
 
-  // 1er element focusable
-  const firstFocusableElement = focusableContent[0];
-  // dernier element focusable
-  const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-  console.log(
-    "liste des elements focusable\n(variable nommée 'focusableContent') :\n",
-    focusableContent
-  );
-
-  // écoute la pression sur les touches
-  document.addEventListener("keydown", function (e) {
+  accessNavigation(e, target) {
+    console.log(
+      "🚀 ~ file: photographer.js:673 ~ App ~ accessNavigation ~ target:",
+      target
+    );
     let isTabPressed = e.key === "Tab";
     let isArrowLeftPressed = e.key === "ArrowLeft";
     let isArrowRightPressed = e.key === "ArrowRight";
+
+    console.log(
+      "liste des elements focusable\n(variable nommée 'focusableContent') :\n",
+      this.focusableContent
+    );
 
     // si pression sur autre chose que Tab, flèche droite et flèche gauche mettre fin à la fonction
     if (!(isTabPressed || isArrowLeftPressed || isArrowRightPressed)) {
@@ -527,14 +694,15 @@ function accessibleNavigation() {
 
     // lors de la première pression de tab ou arrows, ajoute la classe CSS ada à tous les elements de la liste des elements focusable pour mettre en avant le focus
     if (target.getElementsByClassName("ada").length === 0) {
-      for (const element of focusableContent) {
+      console.log("this.focusableContent", this.focusableContent);
+      this.focusableContent.forEach((element) => {
         element.classList.add("ada");
-      }
+      });
     }
 
     //  si shift est pressé (pour shift + tab) ou arrowleft
     if (e.shiftKey || isArrowLeftPressed) {
-      if (document.activeElement === firstFocusableElement) {
+      if (document.activeElement === this.firstFocusableElement) {
         // cas NUMERO 1 où le focus est sur le 1er element et l'on fait un tab arrière : le focus doit aller sur le dernier element
 
         console.log(
@@ -543,21 +711,21 @@ function accessibleNavigation() {
 
         console.log(
           "element sur lequel le focus doit être mis :",
-          lastFocusableElement
+          this.lastFocusableElement
         );
 
-        lastFocusableElement.focus(); // mettre le focus sur le dernier element
+        this.lastFocusableElement.focus(); // mettre le focus sur le dernier element
         e.preventDefault();
         console.log(
           "après interaction focus a été mis sur :",
           document.activeElement,
           "\nindex de l'element dans la nodeList :",
-          Array.from(focusableContent).indexOf(document.activeElement),
+          Array.from(this.focusableContent).indexOf(document.activeElement),
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
 
-        if (lastFocusableElement != document.activeElement) {
+        if (this.lastFocusableElement != document.activeElement) {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
         }
       } else {
@@ -567,7 +735,7 @@ function accessibleNavigation() {
           "---- ---- ---- ---- ---- ---- ----\n2) avant interaction le focus était sur un elem (pas le 1er)\n interaction sur la touche : tab arrière \n résultat attendu : focus sur l'elem precedent"
         );
         // récupérer l'index de l'element actif (focus) et faire le focus sur index - 1)
-        const indexActiveElement = Array.from(focusableContent).indexOf(
+        const indexActiveElement = Array.from(this.focusableContent).indexOf(
           document.activeElement
         );
 
@@ -575,10 +743,11 @@ function accessibleNavigation() {
           "index de l'element focused avant action\n(variable nommée 'indexActiveElement') :\n",
           indexActiveElement,
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
 
-        const indexPreviousElement = focusableContent[indexActiveElement - 1];
+        const indexPreviousElement =
+          this.focusableContent[indexActiveElement - 1];
         console.log(
           "element sur lequel le focus doit être mis\n(variable nommée 'indexPreviousElement') :\n",
           indexPreviousElement
@@ -590,16 +759,16 @@ function accessibleNavigation() {
           "après interaction focus a été mis sur :",
           document.activeElement,
           "\nindex de l'element dans la nodeList :",
-          Array.from(focusableContent).indexOf(document.activeElement),
+          Array.from(this.focusableContent).indexOf(document.activeElement),
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
         if (indexPreviousElement != document.activeElement) {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
         }
       }
     } else {
-      if (document.activeElement === lastFocusableElement) {
+      if (document.activeElement === this.lastFocusableElement) {
         // cas NUMERO 3 où le focus est sur le dernier element et l'on fait un tab : le focus doit aller sur le premier element
 
         console.log(
@@ -608,22 +777,22 @@ function accessibleNavigation() {
 
         console.log(
           "element sur lequel le focus doit être mis :",
-          firstFocusableElement
+          this.firstFocusableElement
         );
 
         // si le focus est actuellement sur le dernier element focusable
-        firstFocusableElement.focus(); // mettre le focus sur le premier element
+        this.firstFocusableElement.focus(); // mettre le focus sur le premier element
         e.preventDefault();
         console.log(
           "après interaction focus a été mis sur :",
           document.activeElement,
           "\nindex de l'element dans la nodeList :",
-          Array.from(focusableContent).indexOf(document.activeElement),
+          Array.from(this.focusableContent).indexOf(document.activeElement),
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
 
-        if (firstFocusableElement != document.activeElement) {
+        if (this.firstFocusableElement != document.activeElement) {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
         }
       } else {
@@ -634,7 +803,8 @@ function accessibleNavigation() {
         );
 
         // récupérer l'index de l'element actif (focus) et faire le focus sur index + 1)
-        let indexActiveElement = Array.from(focusableContent).indexOf(
+        console.log("(this.focusableContent)", this.focusableContent);
+        let indexActiveElement = Array.from(this.focusableContent).indexOf(
           document.activeElement
         );
 
@@ -642,10 +812,10 @@ function accessibleNavigation() {
           "index de l'element focused avant action\n(variable nommée 'indexActiveElement') :\n",
           indexActiveElement,
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
 
-        let indexNextElement = focusableContent[indexActiveElement + 1];
+        let indexNextElement = this.focusableContent[indexActiveElement + 1];
 
         console.log(
           "element sur lequel le focus doit être mis\n(variable nommée 'indexNextElement') :\n",
@@ -659,9 +829,9 @@ function accessibleNavigation() {
           "après interaction focus a été mis sur :",
           document.activeElement,
           "\nindex de l'element dans la nodeList :",
-          Array.from(focusableContent).indexOf(document.activeElement),
+          Array.from(this.focusableContent).indexOf(document.activeElement),
           "/",
-          Array.from(focusableContent).length
+          Array.from(this.focusableContent).length
         );
         if (indexNextElement != document.activeElement) {
           console.log("⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ \ncomportement anormal");
@@ -684,18 +854,91 @@ function accessibleNavigation() {
     // console.log(document.activeElement);
     // console.log(typeof document.activeElement);
     // document.getElementById('elementID').click();
-  });
-  // met le focus sur le 1er element par défaut
-  firstFocusableElement.focus();
-  console.log(
-    "le focus est actuellement sur l'element :",
-    document.activeElement,
-    "\nindex de l'element dans la nodeList :",
-    Array.from(focusableContent).indexOf(document.activeElement),
-    "/",
-    Array.from(focusableContent).length
-  );
+  }
+
+  modal() {
+    //* gestion de la modale contact
+    let contactButton = document.querySelector(".contact_button");
+    let contactModal = document.querySelector(".modal");
+    let closeButton = document.querySelector(".close");
+    let sendButton = document.querySelector(".send_button");
+    let main = document.querySelector("main");
+    // ouverture
+    contactButton.addEventListener("click", () => {
+      console.log("ouverture modal");
+      contactModal.classList.toggle("open");
+      contactModal.showModal();
+      console.log("contactModal", contactModal);
+      contactModal.setAttribute("aria-hidden", "false");
+      main.setAttribute("aria-hidden", "true");
+      this.accessibleNavigation();
+      // TODO prochaine ligne à supprimer ? (doublon avec accessibleNavigation)
+      // document.querySelector("#first").focus();
+    });
+    // fermeture
+    closeButton.addEventListener("click", () => {
+      console.log("fermeture modal");
+      contactModal.close();
+      contactModal.classList.toggle("open");
+      contactModal.setAttribute("aria-hidden", "true");
+      main.setAttribute("aria-hidden", "false");
+    });
+    // bouton Envoyer
+    sendButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("fermeture modal (envoi des données)");
+      // TODO gérer l'envoi des données de la modale
+      console.log(
+        "Message :",
+        "\n",
+        "Prénom :",
+        this.getValue("first"),
+        "\n",
+        "Nom :",
+        this.getValue("last"),
+        "\n",
+        "Email :",
+        this.getValue("email"),
+        "\n",
+        "Message :",
+        this.getValue("message")
+      );
+      const form = document.querySelector("form");
+      form.reset();
+      contactModal.close();
+      contactModal.classList.toggle("open");
+    });
+    // fermeture à la touche Echap
+    document.addEventListener("keydown", (e) => {
+      // console.log("keycode", e.keycode);
+      // console.log("wich", e.which);
+      const keyCode = e.key;
+
+      if (
+        contactModal.getAttribute("aria-hidden") == "false" &&
+        keyCode === "Escape"
+      ) {
+        contactModal.close();
+        contactModal.classList.toggle("open");
+        console.log("fonction de fermeture");
+      }
+      // if (keyCode === 27) {
+      //   contactModal.close();
+      //   console.log("fonction de fermeture");
+      // }
+    });
+  }
+
+  getValue(inputId) {
+    const input = document.getElementById(inputId);
+    return input.value;
+  }
 }
+
+let dialog = document.querySelector("dialog");
+dialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+});
 
 async function init() {
   const app = new App();
@@ -703,8 +946,9 @@ async function init() {
   app.likesCounter();
   app.setLightbox(MediaData);
   app.likeAdder();
-  app.sortBy(MediaData);
-  accessibleNavigation();
+  app.sortAccessibility();
+  app.modal();
+  app.accessibleNavigation();
 
   // console.log("🚀 ~ file: photographer.js:189 ~ init ~ toto:", toto);
   // console.log("toto :", toto);

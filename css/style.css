@@ -25,8 +25,13 @@ body {
   margin: 0;
 }
 
+.ada {
+  border: 2px solid transparent;
+}
+
 .ada:focus {
-  border: 2px dotted yellowgreen;
+  border: 2px dotted var(--second-color);
+  /* border-bottom: 2px dotted var(--second-color); */
   /* border: 2px dotted #901c1c; */
 }
 
@@ -122,7 +127,7 @@ a:link {
   margin-top: 3px;
 }
 .photographer_section article a {
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
 }
 
 .location {

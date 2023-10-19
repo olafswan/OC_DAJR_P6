@@ -25,6 +25,7 @@ class LightboxModal {
     const previousIcon = document.createElement("img");
     previousIcon.src = "./assets/icons/left-arrow-prim-color.svg";
     previousIcon.classList.add("arrow");
+    previousIcon.setAttribute("aria-label", "Média précédent");
     // previousIcon.setAttribute("rotate", " -webkit-transform: rotateX(180deg)");
 
     // création de l'element figure
@@ -60,11 +61,13 @@ class LightboxModal {
     const close = document.createElement("img");
     close.src = "./assets/icons/close-prim-color.svg";
     close.classList.add("close");
+    close.setAttribute("aria-label", "Fermer la fenêtre");
 
     // création de l'element img next
     const nextIcon = document.createElement("img");
     nextIcon.src = "./assets/icons/left-arrow-prim-color.svg";
     nextIcon.classList.add("arrow");
+    nextIcon.setAttribute("aria-label", "Média suivant");
 
     // ajout des element media, likes et figcatpion à leur parent $wrapper
     $wrapper.append(previous, figure, next);

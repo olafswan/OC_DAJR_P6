@@ -28,6 +28,15 @@
   cursor: pointer;
 }
 
+.contact_button:hover,
+.contact_button:focus,
+.drop-down-header:focus,
+.drop-down-option-container:focus {
+  background-color: #db8876;
+  color: #000;
+  border: none !important;
+}
+
 main {
   margin-bottom: 3rem;
 }
@@ -344,7 +353,7 @@ form textarea {
 /* SORT  */
 
 .sorting {
-  height: 30px;
+  height: 60px;
   font-weight: bold;
   padding: 1rem 0;
   display: flex;
@@ -353,7 +362,7 @@ form textarea {
   /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: first baseline;
   margin-top: 1rem;
 }
 
@@ -376,6 +385,62 @@ select {
   font-size: inherit;
   cursor: inherit;
   line-height: inherit; */
+}
+.drop-down-container {
+  background-color: #901c1c;
+  border-radius: 5px;
+  padding: 0.25rem;
+  color: white;
+  font-weight: normal;
+  z-index: 1;
+  border-left: 5px solid #901c1c;
+  border-right: 5px solid #901c1c;
+  width: 9.5rem;
+  /* height: 30px; */
+
+  /* 
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit; */
+}
+
+.drop-down-header {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  /* background-color: pink; */
+  position: relative;
+}
+
+.drop-down-header i {
+  position: absolute;
+  top: 11px;
+  right: 0.5rem;
+}
+.drop-down-header p {
+  padding-left: 0.5rem;
+}
+
+.drop-down-option-container {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ffffff;
+}
+
+.drop-down-option-container p {
+  padding-left: 0.5rem;
+}
+
+.hide {
+  display: none !important;
 }
 
 /* END SORT  */

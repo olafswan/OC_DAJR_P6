@@ -38,10 +38,15 @@ class MediaCard {
     span.innerHTML = `${this._medium.likes} `;
     const i = document.createElement("i");
     i.classList.add("fa-sharp", "fa-solid", "fa-heart");
+    i.setAttribute("aria-label", "Likes");
 
     // création de l'element figcaption pour l'affichage du titre
     const figcaption = document.createElement("figcaption");
     figcaption.textContent = this._medium.title;
+    figcaption.setAttribute(
+      "aria-label",
+      `Titre du média ${this._medium.title}`
+    );
 
     likes.append(span, i);
 
