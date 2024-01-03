@@ -101,6 +101,6 @@ Pour vous aider à réaliser ce projet, [voici un exemple de découpage des éta
 [Utilisez des design patterns en JavaScript](https://openclassrooms.com/fr/courses/7133336-utilisez-des-design-patterns-en-javascript)
 
 ### Résultat final lors du passage de la soutenance :
-[Page d'acceuil FishEye](https://olafswan.github.io/OC_DAJR_P6/index.html)
+[Page d'acceuil FishEye](https://olafswan.github.io/OC_DAJR_P6-FishEye/index.html)
 
-[Page photographe FishEye](https://olafswan.github.io/OC_DAJR_P6/photographer.html?id=243)
+[Page photographe FishEye](https://olafswan.github.io/OC_DAJR_P6-FishEye/photographer.html?id=243)
