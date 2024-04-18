@@ -136,12 +136,42 @@ Bon, il semble bien que vous ayez maintenant tous les éléments dont vous avez 
 
 Pour vous aider à réaliser ce projet, [voici un exemple de découpage des étapes à suivre](https://course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/P6+Front-End+-+Etapes+cles.pdf). Vous y trouverez des conseils pour chaque étape, ainsi que sur l’utilisation des ressources pour ce projet.
 
+***
+
+### Livrables :
+1. Un fichier au format TXT contenant le lien vers votre code sur GitHub avec les fichiers HTML, CSS et JavaScript. 
+
 ### Cours :
 [Concevez un contenu web accessible](https://openclassrooms.com/fr/courses/6691346-concevez-un-contenu-web-accessible)
 
 [Codez un site web accessible avec HTML & CSS](https://openclassrooms.com/fr/courses/6691451-codez-un-site-web-accessible-avec-html-css)
 
 [Utilisez des design patterns en JavaScript](https://openclassrooms.com/fr/courses/7133336-utilisez-des-design-patterns-en-javascript)
+
+### Ressources
+[Un site avec de nombreux exemples de design patterns (ici, Factory Method)
+](https://www.dofactory.com/javascript/design-patterns/factory-method)
+
+[Un guide des design patterns les plus utiles
+](https://medium.com/better-programming/javascript-design-patterns-25f0faaaa15)
+
+[Un article sur l'utilisation de la méthode fetch pour appeler une API
+](https://codingcompiler.com/javascript-design-patterns/)
+
+[Un poste de StackOverflow sur la lecture d'un fichier JSON avec fetch (anglais)
+](https://stackoverflow.com/questions/51859358/how-to-read-json-file-with-fetch-in-javascript)
+
+[Comment trier un tableau en javascript avec la méthode sort
+](https://www.zendevs.xyz/comment-trier-un-tableau-en-javascript-avec-la-methode-sort/)
+
+[How to trap focus inside modal to make it ADA compliant (en anglais)
+](https://uxdesign.cc/how-to-trap-focus-inside-modal-to-make-it-ada-compliant-6a50f9a70700)
+
+[Learning JavaScript Design Patterns
+](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+
+[Déboguez l’interface de votre site internet
+](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet)
 
 ### Résultat final lors du passage de la soutenance :
 [Page d'acceuil FishEye](https://olafswan.github.io/OC_DAJR_P6-FishEye/index.html)
