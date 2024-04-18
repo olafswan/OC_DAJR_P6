@@ -2,6 +2,49 @@
 
 # Créez un site accessible pour une plateforme de photographes
 
+### Qu’allez-vous apprendre dans ce projet ?
+ 
+Dans ce projet, vous travaillerez sur le développement d'un site web pour une plateforme d’artistes.
+
+L'accent sera mis sur la création d'une application web accessible, modulaire et utilisant des **design patterns 
+en JavaScript**.
+
+Vous commencerez par créer un prototype fonctionnel du site web en utilisant HTML, CSS et JavaScript.
+
+Vous aurez à votre disposition des maquettes, des données JSON et un code de base pour démarrer.
+
+Votre tâche consistera à intégrer diverses fonctionnalités telles que la récupération et l'affichage des données, 
+la navigation entre les pages des photographes, une modale de contact, une LightBox pour les médias, et la 
+gestion des likes.
+
+L'accessibilité sera une priorité absolue dans ce projet. 
+
+Vous apprendrez à développer une application web modulaire, en utilisant des design patterns en JavaScript. 
+
+Cela impliquera l'écriture de code maintenable et la gestion des événements du site.
+
+### En quoi ces compétences seront-elles importantes pour votre carrière ? 
+Développer une application web qui est à la fois accessible, modulaire et maintenable est essentiel dans le monde 
+du développement web. 
+
+La maîtrise de l'accessibilité web est non seulement une compétence recherchée, mais aussi une nécessité pour 
+créer des sites inclusifs. 
+
+De plus, comprendre et appliquer des design patterns en JavaScript est crucial pour construire des applications 
+robustes et évolutives. 
+
+Ces compétences vous prépareront à travailler sur des projets web complexes et diversifiés, augmentant votre valeur 
+en tant que développeur web.
+
+ 
+### Objectifs pédagogiques
+* Assurer l'accessibilité d'un site web
+* Développer une application web modulaire avec des design patterns
+* Ecrire du code JavaScript maintenable
+* Gérer les évènements d'un site avec JavaScript
+
+***
+
 ### Scénario :
 
 Depuis quelques semaines, vous êtes développeur junior chez Techasite, une société de conseil spécialisée dans le développement de sites web et d'applications mobiles. 
